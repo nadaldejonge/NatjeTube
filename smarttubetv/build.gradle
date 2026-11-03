@@ -1,46 +1,27 @@
 apply from: gradle.ext.sharedModulesConstants
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-    }
-
-    dependencies {
-        // These docs use an open ended version so that our plugin
-        // can be updated quickly in response to Android tooling updates
-
-        // Check that you have the Google Services Gradle plugin v4.3.2 or later
-        // (if not, add it).
-        classpath 'com.google.gms:google-services:4.3.15'
-
-        // Add the Crashlytics Gradle plugin.
-        // https://firebase.google.com/docs/crashlytics/get-started?platform=android
-        // https://firebase.google.com/docs/android/setup
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
-    }
-}
+// NatjeTube does not use upstream Firebase or Google Services.
 
 apply plugin: 'com.android.application'
+apply from: rootProject.file('natjetube-branding.gradle')
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-
-// The first letter of the flavor name must be in uppercase
-if (new File("${projectDir}/google-services.json").exists() && (getGradle().getStartParameter().getTaskRequests().toString().contains("Stbeta") ||
-        getGradle().getStartParameter().getTaskRequests().toString().contains("Ststable"))) {
-    // Google Services Gradle plugin (transforms google-services.json file)
-    apply plugin: 'com.google.gms.google-services'
-
-    // Apply the Crashlytics Gradle plugin
-    apply plugin: 'com.google.firebase.crashlytics'
+// Own credentials are supplied only to this build process, never stored in Gradle source.
+def signingStore = System.getenv('NATJETUBE_KEYSTORE') ?: keystoreProperties['storeFile']
+def signingStorePassword = System.getenv('NATJETUBE_STORE_PASSWORD') ?: keystoreProperties['storePassword']
+def signingAlias = System.getenv('NATJETUBE_KEY_ALIAS') ?: keystoreProperties['keyAlias']
+def signingKeyPassword = System.getenv('NATJETUBE_KEY_PASSWORD') ?: keystoreProperties['keyPassword']
+def ownSigningReady = signingStore && signingStorePassword && signingAlias && signingKeyPassword
+if (System.getenv('NATJETUBE_REQUIRE_SIGNING') == 'true' && !ownSigningReady) {
+    throw new GradleException('An own NatjeTube release signing key is required.')
 }
 
 android {
+    namespace "com.liskovsoft.smartyoutubetv2.tv"
     // FIX: Default interface methods are only supported starting with Android N (--min-api 24)
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -54,7 +35,7 @@ android {
     
     defaultConfig {
         // values linked with applicationId: searchable.searchSuggestAuthority, searchable.searchSuggestIntentData, VideoContract.CONTENT_AUTHORITY
-        applicationId "app.smarttube"
+        applicationId "nl.natje.natjetube"
         minSdkVersion project.properties.minSdkVersion
         targetSdkVersion project.properties.targetSdkVersion
         versionCode 2458
@@ -90,11 +71,11 @@ android {
 
     signingConfigs {
         release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile = file(keystoreProperties['storeFile'])
-                storePassword = keystoreProperties['storePassword']
-                keyAlias = keystoreProperties['keyAlias']
-                keyPassword = keystoreProperties['keyPassword']
+            if (ownSigningReady) {
+                storeFile = file(signingStore)
+                storePassword = signingStorePassword
+                keyAlias = signingAlias
+                keyPassword = signingKeyPassword
             }
         }
     }
@@ -107,13 +88,13 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            if (keystorePropertiesFile.exists()) {
+            if (ownSigningReady) {
                 signingConfig signingConfigs.release
             }
         }
         // Use same key for release and debug for testing
         debug {
-            if (keystorePropertiesFile.exists()) {
+            if (ownSigningReady) {
                 signingConfig signingConfigs.release
             }
         }
@@ -123,14 +104,14 @@ android {
     // https://stackoverflow.com/questions/18332474/how-to-set-versionname-in-apk-filename-using-gradle
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def project = "SmartTube"
+            def project = "NatjeTube"
             def flavor = variant.productFlavors[-1].name.substring(2) // remove st prefix
             def buildType = variant.buildType.name.take(1)
             def version = variant.versionName
             def arch = output.getFilter(com.android.build.OutputFile.ABI)
             arch = arch != null ? arch : "universal"
 
-            def newApkName = sprintf("%s_%s_%s_%s.apk", [project, flavor, version, arch])
+            def newApkName = sprintf("%s_%s_%s.apk", [project, version, arch])
 
             // gradle 4.6 migration
             output.outputFileName = new File(newApkName)
@@ -160,15 +141,15 @@ android {
     // NOTE: The main goal of prefixing a flavor is to group flavors' folders together
     productFlavors {
         stbeta {
-            applicationId "org.smarttube.beta"
+            applicationId "nl.natje.natjetube.beta"
             targetSdkVersion project.properties.compileSdkVersion
         }
         ststable {
-            applicationId "org.smarttube.stable"
+            applicationId "nl.natje.natjetube"
             targetSdkVersion project.properties.compileSdkVersion
         }
         stfdroid {
-            applicationId "app.smarttube.fdroid"
+            applicationId "nl.natje.natjetube.fdroid"
             minSdkVersion 21
             targetSdkVersion project.properties.compileSdkVersion
 
@@ -235,16 +216,6 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxandroid:' + rxAndroidVersion
     implementation 'io.reactivex.rxjava2:rxjava:' + rxJavaVersion
-
-    // Add the Firebase Crashlytics SDK.
-
-    stbetaImplementation('com.google.firebase:firebase-crashlytics:' + firebaseCrashlyticsVersion) {
-        transitive = true
-    }
-
-    ststableImplementation('com.google.firebase:firebase-crashlytics:' + firebaseCrashlyticsVersion) {
-        transitive = true
-    }
 
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 

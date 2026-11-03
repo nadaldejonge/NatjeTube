@@ -71,3 +71,11 @@ tmp/
 fabric.properties
 *BAK.java
 hs_err_pid*.log
+
+# NatjeTube signing and private configuration
+keystore.properties
+*.jks
+*.keystore
+*.p12
+*.dpapi
+google-services.json

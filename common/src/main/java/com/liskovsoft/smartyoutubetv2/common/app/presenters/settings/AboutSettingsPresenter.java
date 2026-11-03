@@ -60,28 +60,14 @@ public class AboutSettingsPresenter extends BasePresenter<Void> {
             appendLinks(settingsPresenter);
         }
 
+        settingsPresenter.appendSingleButton(UiOptionItem.from(
+                getContext().getString(R.string.natjetube_attribution_title),
+                option -> MessageHelpers.showLongMessage(getContext(), R.string.natjetube_attribution)));
         settingsPresenter.showDialog(mainTitle);
     }
 
     private void appendAutoUpdateSwitch(AppDialogPresenter settingsPresenter) {
-        GeneralData generalData = GeneralData.instance(getContext());
-        List<OptionItem> items = new ArrayList<>();
-
-        items.add(UiOptionItem.from(getContext().getString(R.string.option_disabled),
-                optionItem -> mUpdateChecker.setUpdateCheckEnabled(false),
-                !mUpdateChecker.isUpdateCheckEnabled()));
-
-        items.add(UiOptionItem.from(getContext().getString(R.string.sidebar_notification), optionItem -> {
-            mUpdateChecker.setUpdateCheckEnabled(true);
-            generalData.setOldUpdateNotificationsEnabled(false);
-        }, mUpdateChecker.isUpdateCheckEnabled() && !generalData.isOldUpdateNotificationsEnabled()));
-        
-        items.add(UiOptionItem.from(getContext().getString(R.string.dialog_notification), optionItem -> {
-            mUpdateChecker.setUpdateCheckEnabled(true);
-            generalData.setOldUpdateNotificationsEnabled(true);
-        }, mUpdateChecker.isUpdateCheckEnabled() && generalData.isOldUpdateNotificationsEnabled()));
-
-        settingsPresenter.appendRadioCategory(getContext().getString(R.string.check_updates_auto), items);
+        mUpdateChecker.setUpdateCheckEnabled(false);
     }
 
     private void appendUpdateCheckButton(AppDialogPresenter settingsPresenter) {
@@ -113,10 +99,10 @@ public class AboutSettingsPresenter extends BasePresenter<Void> {
     }
 
     private void appendLinks(AppDialogPresenter settingsPresenter) {
-        OptionItem releasesOption = UiOptionItem.from(getContext().getString(R.string.releases),
+        OptionItem releasesOption = UiOptionItem.from(getContext().getString(R.string.natjetube_upstream_releases),
                 option -> Utils.openLink(getContext(), Utils.toQrCodeLink(getContext().getString(R.string.releases_url))));
 
-        OptionItem sourcesOption = UiOptionItem.from(getContext().getString(R.string.sources),
+        OptionItem sourcesOption = UiOptionItem.from(getContext().getString(R.string.natjetube_upstream_sources),
                 option -> Utils.openLink(getContext(), Utils.toQrCodeLink(getContext().getString(R.string.sources_url))));
 
         //OptionItem webSiteOption = UiOptionItem.from(getContext().getString(R.string.web_site),
@@ -139,7 +125,7 @@ public class AboutSettingsPresenter extends BasePresenter<Void> {
         }
 
         if (!donateOptions.isEmpty()) {
-            settingsPresenter.appendStringsCategory(getContext().getString(R.string.donation), donateOptions);
+            settingsPresenter.appendStringsCategory(getContext().getString(R.string.natjetube_upstream_donation), donateOptions);
         }
     }
 
@@ -178,7 +164,7 @@ public class AboutSettingsPresenter extends BasePresenter<Void> {
         }
 
         if (!feedbackOptions.isEmpty()) {
-            settingsPresenter.appendStringsCategory(getContext().getString(R.string.feedback), feedbackOptions);
+            settingsPresenter.appendStringsCategory(getContext().getString(R.string.natjetube_upstream_feedback), feedbackOptions);
         }
     }
 

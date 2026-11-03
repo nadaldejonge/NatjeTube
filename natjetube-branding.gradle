@@ -1,0 +1,26 @@
+// Resource verification only; this task never generates or modifies artwork.
+def brandingRoot = rootProject.projectDir.parentFile
+def verifyBranding = tasks.register('verifyNatjeTubeBranding') {
+    doLast {
+        def receiptFile = new File(brandingRoot, 'branding/installed-assets.json')
+        if (!receiptFile.isFile()) {
+            throw new GradleException('STOP: Import your own NatjeTube artwork with tools/import_branding.py --apply before building.')
+        }
+        def receipt = new groovy.json.JsonSlurper().parse(receiptFile)
+        def inventory = new groovy.json.JsonSlurper().parse(new File(brandingRoot, 'branding-inventory.json'))
+        def expected = inventory.collect { it.path }.toSet()
+        if (receipt.outputs.collect { it.path }.toSet() != expected) {
+            throw new GradleException('Branding receipt does not cover all inventoried resources.')
+        }
+        receipt.outputs.each { entry ->
+            def asset = new File(rootProject.projectDir, entry.path)
+            def sha = asset.isFile() ? java.security.MessageDigest.getInstance('SHA-256').digest(asset.bytes).encodeHex().toString() : null
+            if (sha != entry.sha256) {
+                throw new GradleException("NatjeTube artwork missing or changed: ${entry.path}")
+            }
+        }
+    }
+}
+tasks.matching { it.name == 'preBuild' }.configureEach {
+    dependsOn verifyBranding
+}

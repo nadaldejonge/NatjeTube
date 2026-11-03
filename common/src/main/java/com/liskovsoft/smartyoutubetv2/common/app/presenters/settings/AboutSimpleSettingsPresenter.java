@@ -28,7 +28,7 @@ public class AboutSimpleSettingsPresenter extends BasePresenter<Void> {
 
     public void show() {
         String mainTitle = String.format("%s %s",
-                getContext().getString(R.string.app_name) + " MOD",
+                getContext().getString(R.string.app_name),
                 AppInfoHelpers.getAppVersionName(getContext()));
 
         AppDialogPresenter settingsPresenter = AppDialogPresenter.instance(getContext());
@@ -39,13 +39,14 @@ public class AboutSimpleSettingsPresenter extends BasePresenter<Void> {
 
         appendInstallBridge(settingsPresenter);
 
+        settingsPresenter.appendSingleButton(UiOptionItem.from(
+                getContext().getString(R.string.natjetube_attribution_title),
+                option -> MessageHelpers.showLongMessage(getContext(), R.string.natjetube_attribution)));
         settingsPresenter.showDialog(mainTitle);
     }
 
     private void appendAutoUpdateSwitch(AppDialogPresenter settingsPresenter) {
-        settingsPresenter.appendSingleSwitch(UiOptionItem.from(getContext().getString(R.string.check_updates_auto), optionItem -> {
-            mUpdateChecker.setUpdateCheckEnabled(optionItem.isSelected());
-        }, mUpdateChecker.isUpdateCheckEnabled()));
+        mUpdateChecker.setUpdateCheckEnabled(false);
     }
 
     private void appendUpdateCheckButton(AppDialogPresenter settingsPresenter) {

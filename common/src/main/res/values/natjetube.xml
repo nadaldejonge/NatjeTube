@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="natjetube_attribution_title">NatjeTube / SmartTube (MIT)</string>
+    <string name="natjetube_upstream_releases">SmartTube releases (upstream)</string>
+    <string name="natjetube_upstream_sources">SmartTube source (upstream)</string>
+    <string name="natjetube_upstream_donation">Donate to SmartTube (upstream)</string>
+    <string name="natjetube_upstream_feedback">SmartTube community (upstream)</string>
+    <string name="natjetube_manual_updates">NatjeTube updates are installed manually with your own signed APK. Automatic upstream updates are disabled.</string>
+    <string name="natjetube_attribution">NatjeTube is based on SmartTube by yuliskov (MIT License). This is an independent build, not an official SmartTube or YouTube release. Project links and donations refer to upstream.</string>
+</resources>

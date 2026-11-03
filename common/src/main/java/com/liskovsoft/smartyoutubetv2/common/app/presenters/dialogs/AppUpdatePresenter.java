@@ -49,6 +49,14 @@ public class AppUpdatePresenter extends BasePresenter<Void> implements AppUpdate
     }
 
     public void start(boolean forceCheck) {
+        // No NatjeTube update service exists. Never query or install upstream updates.
+        if (getContext().getPackageName().startsWith("nl.natje.natjetube")) {
+            if (forceCheck) {
+                MessageHelpers.showLongMessage(getContext(), R.string.natjetube_manual_updates);
+            }
+            onFinish();
+            return;
+        }
         mIsForceCheck = forceCheck;
 
         if (forceCheck) {

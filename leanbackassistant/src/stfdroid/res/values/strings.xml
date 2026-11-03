@@ -1,5 +1,5 @@
 <resources translatable="false">
-    <string name="search_label">SmartTube</string>
-    <string name="settings_description">SmartTube Videos</string>
-    <string name="search_authority">app.smarttube.fdroid.search_provider</string>
+    <string name="search_label">NatjeTube</string>
+    <string name="settings_description">NatjeTube Videos</string>
+    <string name="search_authority">nl.natje.natjetube.fdroid</string>
 </resources>
