@@ -1,0 +1,183 @@
+{
+  "inputs": {
+    "app_icon.png": "c4f68df1ceefd1bafdaca713114302180217750b3465f060ab41d7622fefde79",
+    "app_icon_alt.png": "95c27a3c268069156c5afad474d7bf93697a857b1fd93bb988f117cd76224ac2",
+    "app_icon_v30.png": "b2e3a8d4aa0d335cf3d2ec3ea1a3099cd1cd29711048f2cc8ffbc54234edb2da",
+    "app_banner.png": "4edb738afca7a273de9a15d44863270964cae9e814e76d2ecd01341c9a28476d",
+    "generic_channels.png": "4dc6087878d85d1f4e5dcc4e0134b4d987961a5764c04e2233d32b353a89b499",
+    "app_logo_square.png": "55248a98622d8700fac3b3c2cc98810e9286ea1400188e03d85da760210ac5c6",
+    "app_logo_square_semi_grey.png": "ed39a275a432adbf49f2cb5b7e4a745747dbb189f9607a66847de1f998149fa5",
+    "app_logo_square_semi_red.png": "83516f2edd43a50258e88cb9bf39570f313a5396b71ace5dfccdf8f0e9f1fe10",
+    "app_logo.png": "6b2b0a085612c9979f529e065cf279a81cd0fec143cd04dfff1504ae43421f8e",
+    "app_logo_semi_grey.png": "276141740a68cccc30529b2fff25552aa950ea8fbb404ed88d47fba2478c0401",
+    "app_logo_semi_red.png": "2d992c4d340db608a89e9422c63294ac042d267545bec27d5bbc76e57c342146"
+  },
+  "outputs": [
+    {
+      "path": "images/app_banner.png",
+      "sha256": "c25058cd27d4a25ecbed91605b71bd846cd67cf352a78ad2cddc89684436ddb8",
+      "input": "app_banner.png"
+    },
+    {
+      "path": "images/app_icon.png",
+      "sha256": "acc7c48f732b3d960b99f1b7fa09afca02459edcd883cdd0db21b0c4e2973f98",
+      "input": "app_icon.png"
+    },
+    {
+      "path": "images/app_icon_downscaled.png",
+      "sha256": "c184b04cb8ea1714502f5a7c01ca9cedea96e85e6909d021358c98c733dba06d",
+      "input": "app_icon_alt.png"
+    },
+    {
+      "path": "images/app_logo.png",
+      "sha256": "5d0c583db3a54c8ec365f058e0695e6f20a613c4146b927f0a76d9a7d138f895",
+      "input": "app_logo.png"
+    },
+    {
+      "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_banner.png",
+      "sha256": "ce000c24d099b6871447eef57c91c91b44514d22d2dc1d3012fdd572a9aa4d8a",
+      "input": "app_banner.png"
+    },
+    {
+      "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_icon.png",
+      "sha256": "acc7c48f732b3d960b99f1b7fa09afca02459edcd883cdd0db21b0c4e2973f98",
+      "input": "app_icon.png"
+    },
+    {
+      "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_logo.png",
+      "sha256": "c7ee31438f6254b355a2e58470a79180f6931c7d39ae05761a87e49357e12dc1",
+      "input": "app_logo_square.png"
+    },
+    {
+      "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_logo_semi_grey.png",
+      "sha256": "1f152d2a0f045c3f9d8ec1b2c2ce6bc656da777303c182292d902ea817792511",
+      "input": "app_logo_square_semi_grey.png"
+    },
+    {
+      "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_logo_semi_red.png",
+      "sha256": "cfbb19b305f51f799fc9ea8a95dca6c103eb864b54450fa95a318b99eb6184fe",
+      "input": "app_logo_square_semi_red.png"
+    },
+    {
+      "path": "smarttubetv/src/ststable/res/mipmap-nodpi-v30/app_icon.png",
+      "sha256": "0094d28b1138e05d8eed5a2c13eca1f891f1f0b3c6f1f7ffa215d8b8ecfa51e3",
+      "input": "app_icon_v30.png"
+    },
+    {
+      "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_banner.png",
+      "sha256": "ce000c24d099b6871447eef57c91c91b44514d22d2dc1d3012fdd572a9aa4d8a",
+      "input": "app_banner.png"
+    },
+    {
+      "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_icon.png",
+      "sha256": "acc7c48f732b3d960b99f1b7fa09afca02459edcd883cdd0db21b0c4e2973f98",
+      "input": "app_icon.png"
+    },
+    {
+      "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_logo.png",
+      "sha256": "c7ee31438f6254b355a2e58470a79180f6931c7d39ae05761a87e49357e12dc1",
+      "input": "app_logo_square.png"
+    },
+    {
+      "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_logo_semi_grey.png",
+      "sha256": "1f152d2a0f045c3f9d8ec1b2c2ce6bc656da777303c182292d902ea817792511",
+      "input": "app_logo_square_semi_grey.png"
+    },
+    {
+      "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_logo_semi_red.png",
+      "sha256": "cfbb19b305f51f799fc9ea8a95dca6c103eb864b54450fa95a318b99eb6184fe",
+      "input": "app_logo_square_semi_red.png"
+    },
+    {
+      "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi-v30/app_icon.png",
+      "sha256": "0094d28b1138e05d8eed5a2c13eca1f891f1f0b3c6f1f7ffa215d8b8ecfa51e3",
+      "input": "app_icon_v30.png"
+    },
+    {
+      "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_banner.png",
+      "sha256": "ce000c24d099b6871447eef57c91c91b44514d22d2dc1d3012fdd572a9aa4d8a",
+      "input": "app_banner.png"
+    },
+    {
+      "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_icon.png",
+      "sha256": "acc7c48f732b3d960b99f1b7fa09afca02459edcd883cdd0db21b0c4e2973f98",
+      "input": "app_icon.png"
+    },
+    {
+      "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_logo.png",
+      "sha256": "c7ee31438f6254b355a2e58470a79180f6931c7d39ae05761a87e49357e12dc1",
+      "input": "app_logo_square.png"
+    },
+    {
+      "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_logo_semi_grey.png",
+      "sha256": "1f152d2a0f045c3f9d8ec1b2c2ce6bc656da777303c182292d902ea817792511",
+      "input": "app_logo_square_semi_grey.png"
+    },
+    {
+      "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_logo_semi_red.png",
+      "sha256": "cfbb19b305f51f799fc9ea8a95dca6c103eb864b54450fa95a318b99eb6184fe",
+      "input": "app_logo_square_semi_red.png"
+    },
+    {
+      "path": "smarttubetv/src/stbeta/res/mipmap-nodpi-v30/app_icon.png",
+      "sha256": "0094d28b1138e05d8eed5a2c13eca1f891f1f0b3c6f1f7ffa215d8b8ecfa51e3",
+      "input": "app_icon_v30.png"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_banner.png",
+      "sha256": "c25058cd27d4a25ecbed91605b71bd846cd67cf352a78ad2cddc89684436ddb8",
+      "input": "app_banner.png"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_icon.png",
+      "sha256": "acc7c48f732b3d960b99f1b7fa09afca02459edcd883cdd0db21b0c4e2973f98",
+      "input": "app_icon.png"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_icon_alt.png",
+      "sha256": "c184b04cb8ea1714502f5a7c01ca9cedea96e85e6909d021358c98c733dba06d",
+      "input": "app_icon_alt.png"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo.png",
+      "sha256": "5d0c583db3a54c8ec365f058e0695e6f20a613c4146b927f0a76d9a7d138f895",
+      "input": "app_logo.png"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo_none.png",
+      "sha256": "9f0360de4c5577e6aeded8703ce75d3ec283deedcd80fd4cfb709521d5f0997c",
+      "input": "generated transparent canvas"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo_semi_grey.png",
+      "sha256": "94cbd7e825795d3c12e0e38e214b8aceb8aa8bb8b1aba757cad01ecf7d18c5f8",
+      "input": "app_logo_semi_grey.png"
+    },
+    {
+      "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo_semi_red.png",
+      "sha256": "48446b66965211b7120ba47c5ca5bb8bbebf565fef8efb64cf3081c0dda8b3de",
+      "input": "app_logo_semi_red.png"
+    },
+    {
+      "path": "leanbackassistant/src/ststable/res/drawable/generic_channels.png",
+      "sha256": "a8ced36c8457670ef99161ad21b2e08e98890de9b7fdc365dc485a0ec278f414",
+      "input": "generic_channels.png"
+    },
+    {
+      "path": "leanbackassistant/src/stfdroid/res/drawable/generic_channels.png",
+      "sha256": "a8ced36c8457670ef99161ad21b2e08e98890de9b7fdc365dc485a0ec278f414",
+      "input": "generic_channels.png"
+    },
+    {
+      "path": "leanbackassistant/src/stbeta/res/drawable/generic_channels.png",
+      "sha256": "a8ced36c8457670ef99161ad21b2e08e98890de9b7fdc365dc485a0ec278f414",
+      "input": "generic_channels.png"
+    },
+    {
+      "path": "leanbackassistant/src/main/res/drawable/generic_channels.png",
+      "sha256": "a8ced36c8457670ef99161ad21b2e08e98890de9b7fdc365dc485a0ec278f414",
+      "input": "generic_channels.png"
+    }
+  ],
+  "pillow": "13.0.0"
+}

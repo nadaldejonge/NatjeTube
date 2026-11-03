@@ -1,0 +1,332 @@
+[
+  {
+    "path": "images/app_banner.png",
+    "sha256": "f6ed7784cb0a4c972bf765157b213a13a00fdd9752f52300a71aacff7a158714",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "images/app_icon.png",
+    "sha256": "6f31c66c712a4a4171b9127d77e09283af5cd16af1e28a4de391eb8d5b98f419",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "images/app_icon_downscaled.png",
+    "sha256": "63e07078fdba10caf54f0c053dd6e48a00bc3d460ad5a9d53dfd41fbdf5ee7e8",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "images/app_logo.png",
+    "sha256": "034df2d5ca09e2f3c52c46216cb5cf87c3e01b44f4f71e9c73ca70c68e178676",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_banner.png",
+    "sha256": "5adfab8657ed1ea2ddaffde437ed113c02b842b01298de484b8f690a1e44a99a",
+    "format": "PNG",
+    "width": 640,
+    "height": 360,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_icon.png",
+    "sha256": "d6d0f1b9edc4b1be8a312483ff25be1c29801b8d7e4d3e810c2cbb3c94f7f946",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_logo.png",
+    "sha256": "a795ad268667f5d5b7bdc1c35738908e789d8e4c1bae03047f8154f5053750f5",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_logo_semi_grey.png",
+    "sha256": "a6567a4b0c38c9eaf90d1b4b416741b8d5fb5ecfe9ef7375147c1a964e083c28",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/ststable/res/mipmap-nodpi/app_logo_semi_red.png",
+    "sha256": "b6fdf634b1b7c7dba0925643aff94b288bf1738c9cf18a265f86ce46e708eb39",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/ststable/res/mipmap-nodpi-v30/app_icon.png",
+    "sha256": "964714a1524eb6a3c67e0dbd7afce348d6bc4506dadf4673e9fca440197e1b88",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_banner.png",
+    "sha256": "d0ccf388004c47c9f80c7d7c5c924b554433c42fd68a375c9af0eb2fd81b6ea7",
+    "format": "PNG",
+    "width": 640,
+    "height": 360,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_icon.png",
+    "sha256": "f2a762b3375aefce959ab5eeff566ebb4890cd957664e4bf35648b5de6cb1796",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_logo.png",
+    "sha256": "aa06bee4c9b5bbf6b76348c8f7ca40eb45ea97c3aa1a4b131d8ed0cb2ddaee73",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_logo_semi_grey.png",
+    "sha256": "f1f54b9e76e0f0f0e318aaea677126c55a8c0d0a84cb628c438d4b35d41fd55d",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi/app_logo_semi_red.png",
+    "sha256": "19d390cc5293683c54ea11a81a1c9230bb36f0eac1760c916176d91319fa6b5f",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stfdroid/res/mipmap-nodpi-v30/app_icon.png",
+    "sha256": "a5056f566d700efe026425399fe75ab967e57a4b83809b3b89686032c883a582",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_banner.png",
+    "sha256": "5079177710e68848d2461c0fe14bdc8fb5457eb482f744d2a7f0386c846f1657",
+    "format": "PNG",
+    "width": 640,
+    "height": 360,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_icon.png",
+    "sha256": "d499cc8ca1ac9677b4f50de03819a8faa0c61f3ce2bd95c926c3881708854def",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_logo.png",
+    "sha256": "85cb9a0cd64aa7f1b3d387f960815d46e1783f18679c20ce133bb5705af05d7a",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_logo_semi_grey.png",
+    "sha256": "7b9cea70e6266f620758c6e3dd74fb54ef34f3bed7f00247ac2698e4a114ed40",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stbeta/res/mipmap-nodpi/app_logo_semi_red.png",
+    "sha256": "e0a6ed1d376398eba977eea5b72841177bd218b4434722e2b3e0246208d9471b",
+    "format": "PNG",
+    "width": 180,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/stbeta/res/mipmap-nodpi-v30/app_icon.png",
+    "sha256": "f189521e1f3b1e33e84b53f97a0117ecc64c3c8ab6aee087bb582aea3632299d",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_banner.png",
+    "sha256": "f6ed7784cb0a4c972bf765157b213a13a00fdd9752f52300a71aacff7a158714",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_icon.png",
+    "sha256": "6f31c66c712a4a4171b9127d77e09283af5cd16af1e28a4de391eb8d5b98f419",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_icon_alt.png",
+    "sha256": "9c555fb6789820948abaa6081e941cd199cdbe78dc0c8c2834d549f08542bcfa",
+    "format": "PNG",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo.png",
+    "sha256": "391b32c68542001c9bb81a36abb35dcbaf0ea5722eae8f01d57865c7487c1ab1",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo_none.png",
+    "sha256": "9ed18ca5a9de2cf6a0f44783fe45f38dd23be188fbc2cfe56079a796ee7bf070",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo_semi_grey.png",
+    "sha256": "2cd9a7262df78487133d202c8838adce9a99520ca1e6c4dfa27399a343db940f",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "smarttubetv/src/main/res/mipmap-nodpi/app_logo_semi_red.png",
+    "sha256": "4719b1299b6099f63c5d3e5d387c37c06734adec48cf7c1aecb4b15674477b60",
+    "format": "PNG",
+    "width": 320,
+    "height": 180,
+    "mode": "RGBA",
+    "alpha_channel": true,
+    "transparent_pixels": true
+  },
+  {
+    "path": "leanbackassistant/src/ststable/res/drawable/generic_channels.png",
+    "sha256": "47ca43e6bc06d3f160356c97a7b44e6df7ca3ddd53eb2c01160a38b5ac8011ee",
+    "format": "PNG",
+    "width": 300,
+    "height": 300,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "leanbackassistant/src/stfdroid/res/drawable/generic_channels.png",
+    "sha256": "763c4e757d25b2e0373aeb2465ac80b6913e36ab05196d97315b1031601db7de",
+    "format": "PNG",
+    "width": 300,
+    "height": 300,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "leanbackassistant/src/stbeta/res/drawable/generic_channels.png",
+    "sha256": "3d6bbc199e1319433f3f006bfb29e3d1c0ffc2529cd61a389e88e6f30e01161c",
+    "format": "PNG",
+    "width": 300,
+    "height": 300,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  },
+  {
+    "path": "leanbackassistant/src/main/res/drawable/generic_channels.png",
+    "sha256": "7d4f24a410bfbec63b14011502bbeee7ad96e2c71a80587a9a23634c1ce7468e",
+    "format": "PNG",
+    "width": 300,
+    "height": 300,
+    "mode": "RGB",
+    "alpha_channel": false,
+    "transparent_pixels": false
+  }
+]

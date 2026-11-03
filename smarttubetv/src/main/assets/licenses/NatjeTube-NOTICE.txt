@@ -1,4 +1,1 @@
-NatjeTube is an independent build based on SmartTube by yuliskov.
-Upstream: https://github.com/yuliskov/SmartTube
-Not an official SmartTube or YouTube release.
-Original source and dependency license notices are retained.
+NatjeTube by NatjeNN, with assistance from Codex. Based on MIT-licensed code by yuliskov and other contributors. Original copyright and license terms are preserved in upstream-MIT.txt. Independent project; not affiliated with YouTube or Google.

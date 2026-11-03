@@ -1,1 +1,7 @@
-Browse media content with your own rules on Android TV
+Schijt stinkreclames altijd. Je wil gewoon je video kijken, gap.
+
+NatjeTube is mijn eigen versie van een YouTube-player voor Android TV, gemaakt door NatjeNN met hulp van Codex. Eigen branding, bediening met je afstandsbediening en SponsorBlock om sponsorstukjes over te slaan. Yusu? Yusu.
+
+Zoeken, ondertitels, accountkoppeling, afspeelsnelheid en videokwaliteit zitten erin. 4K, HDR en 60 fps hangen af van je apparaat en de video. Updates installeer je handmatig.
+
+Gebaseerd op bestaande open-sourcecode van yuliskov en andere bijdragers, met behoud van hun copyright- en licentieteksten. Onafhankelijk project; geen officiële band met YouTube of Google.

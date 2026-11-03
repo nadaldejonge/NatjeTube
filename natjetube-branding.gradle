@@ -1,5 +1,8 @@
 // Resource verification only; this task never generates or modifies artwork.
-def brandingRoot = rootProject.projectDir.parentFile
+def brandingRoot = rootProject.projectDir
+if (!new File(brandingRoot, 'branding/installed-assets.json').isFile()) {
+    brandingRoot = rootProject.projectDir.parentFile
+}
 def verifyBranding = tasks.register('verifyNatjeTubeBranding') {
     doLast {
         def receiptFile = new File(brandingRoot, 'branding/installed-assets.json')
