@@ -13,13 +13,18 @@ import com.bumptech.glide.module.AppGlideModule;
  */
 @GlideModule
 public class GlideCachingModule extends AppGlideModule {
-    private final static long CACHE_SIZE = 10 * 1024 * 1024; // 10 MB
+    private final static long CACHE_SIZE = 32 * 1024 * 1024; // Bounded 32 MiB disk cache
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         //if (MyApplication.from(context).isTest())
         //    return; // NOTE: StatFs will crash on robolectric.
 
+        com.bumptech.glide.load.engine.cache.MemorySizeCalculator limits =
+                new com.bumptech.glide.load.engine.cache.MemorySizeCalculator.Builder(context)
+                        .setMemoryCacheScreens(1).setBitmapPoolScreens(1)
+                        .setMaxSizeMultiplier(0.12f).setLowMemoryMaxSizeMultiplier(0.08f).build();
+        builder.setMemorySizeCalculator(limits);
         // Limit cache size
         builder.setDiskCache(new InternalCacheDiskCacheFactory(context, CACHE_SIZE));
     }

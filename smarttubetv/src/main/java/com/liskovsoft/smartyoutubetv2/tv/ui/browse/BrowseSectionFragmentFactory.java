@@ -61,6 +61,9 @@ public class BrowseSectionFragmentFactory extends BrowseSupportFragment.Fragment
         Fragment fragment = null;
 
         switch (mFragmentType) {
+            case BrowseSection.TYPE_ACTION:
+                fragment = new NatjeNightActionFragment();
+                break;
             case BrowseSection.TYPE_ROW:
                 fragment = new VideoRowsFragment();
                 break;

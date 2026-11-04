@@ -40,6 +40,9 @@ public class AppDataSourceManager {
 
     public List<SettingsItem> getSettingItems(Context context) {
         List<SettingsItem> settingItems = new ArrayList<>();
+        settingItems.add(new SettingsItem(context.getString(R.string.night_title),
+                () -> com.liskovsoft.smartyoutubetv2.common.app.presenters.settings.NatjeNightModeSettingsPresenter.show(context),
+                R.drawable.ic_natje_night_mode));
 
         settingItems.add(new SettingsItem(
                 context.getString(R.string.settings_accounts), () -> AccountSettingsPresenter.instance(context).show(), R.drawable.settings_account));

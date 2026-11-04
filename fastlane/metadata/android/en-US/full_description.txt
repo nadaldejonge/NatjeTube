@@ -1,7 +1,1 @@
-Schijt stinkreclames altijd. Je wil gewoon je video kijken, gap.
-
-NatjeTube is mijn eigen versie van een YouTube-player voor Android TV, gemaakt door NatjeNN met hulp van Codex. Eigen branding, bediening met je afstandsbediening en SponsorBlock om sponsorstukjes over te slaan. Yusu? Yusu.
-
-Zoeken, ondertitels, accountkoppeling, afspeelsnelheid en videokwaliteit zitten erin. 4K, HDR en 60 fps hangen af van je apparaat en de video. Updates installeer je handmatig.
-
-Gebaseerd op bestaande open-sourcecode van yuliskov en andere bijdragers, met behoud van hun copyright- en licentieteksten. Onafhankelijk project; geen officiële band met YouTube of Google.
+NatjeTube is an independent Android TV client based on SmartTube. Version 2.0 adds a refreshed dark interface and NatjeNightMode: warmth, dimming, presets, custom profiles and offline scheduling. Existing playback, account linking, search, subtitles and SponsorBlock use the existing architecture. Night warmth is a tint, not calibrated display control. Physical TV/HDR testing is still pending. Original licences and attribution are retained. Download signed releases from https://github.com/nadaldejonge/NatjeTube/releases

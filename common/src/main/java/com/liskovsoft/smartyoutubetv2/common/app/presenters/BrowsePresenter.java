@@ -183,6 +183,9 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
     }
 
     private void initSectionMapping() {
+        mSectionsMapping.put(com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID,
+                new BrowseSection(com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID,
+                        getContext().getString(R.string.night_title), BrowseSection.TYPE_ACTION, R.drawable.ic_natje_night_mode, false));
         String country = LocaleUtility.getCurrentLocale(getContext()).getCountry();
         int uploadsType = getMainUIData().isUploadsOldLookEnabled() ? BrowseSection.TYPE_GRID : BrowseSection.TYPE_MULTI_GRID;
 
@@ -492,6 +495,11 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
 
     @Override
     public void onSectionFocused(int sectionId) {
+        if (sectionId == com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID) {
+            disposeActions(); saveSelectedItems(); mCurrentSection = findSectionById(sectionId);
+            if (getView() != null) getView().showProgressBar(false);
+            return; // Focus never executes an action or starts a media request.
+        }
         saveSelectedItems(); // save previous state
         mCurrentSection = findSectionById(sectionId);
         mCurrentVideo = null; // fast scroll through the sections (fix empty selected item)

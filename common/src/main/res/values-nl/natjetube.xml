@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="natjetube_attribution_title">NatjeTube / MIT-credits</string>
-    <string name="natjetube_upstream_releases">NatjeTube downloaden</string>
-    <string name="natjetube_upstream_sources">NatjeTube-broncode</string>
-    <string name="natjetube_upstream_donation">Donaties</string>
-    <string name="natjetube_upstream_feedback">NatjeTube-feedback</string>
-    <string name="natjetube_manual_updates">Pak je NatjeTube-APK bij onze GitHub-releases, gap. Updates installeer je handmatig.</string>
-    <string name="natjetube_attribution">NatjeTube van NatjeNN, gemaakt met hulp van Codex. Gebouwd op MIT-broncode van yuliskov en andere bijdragers. Copyright- en licentieteksten zitten bij de app. Onafhankelijk project; geen officiële band met YouTube of Google. Gewoon kijken, gap.</string>
+    <string name="natjetube_attribution_title">Open-sourcelicenties</string>
+    <string name="natjetube_upstream_releases">SmartTube-releases (upstream)</string>
+    <string name="natjetube_upstream_sources">SmartTube-broncode (upstream)</string>
+    <string name="natjetube_upstream_donation">Doneren aan SmartTube (upstream)</string>
+    <string name="natjetube_upstream_feedback">SmartTube-community (upstream)</string>
+    <string name="natjetube_manual_updates">NatjeTube wordt handmatig bijgewerkt met een eigen ondertekende APK. Automatische upstream-updates zijn uitgeschakeld.</string>
+    <string name="natjetube_attribution">NatjeTube is gebaseerd op SmartTube van yuliskov (MIT-licentie). Dit is een onafhankelijke build, geen officiële SmartTube- of YouTube-release. Projectlinks en donaties verwijzen naar upstream.</string>
 </resources>

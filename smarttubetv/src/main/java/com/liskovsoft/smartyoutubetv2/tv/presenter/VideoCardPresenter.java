@@ -94,7 +94,8 @@ public class VideoCardPresenter extends LongClickPresenter {
 
     private void updateCardBackgroundColor(ComplexImageCardView view, boolean selected) {
         int backgroundColor = selected ? mSelectedBackgroundColor : mDefaultBackgroundColor;
-        int textColor = selected ? mSelectedTextColor : mDefaultTextColor;
+        int textColor = selected && androidx.core.graphics.ColorUtils.calculateLuminance(mSelectedBackgroundColor) > 0.5
+                ? android.graphics.Color.BLACK : mDefaultTextColor;
 
         // Both background colors should be set because the view's
         // background is temporarily visible during animations.
@@ -112,7 +113,7 @@ public class VideoCardPresenter extends LongClickPresenter {
         }
         TextView contentText = view.findViewById(R.id.content_text);
         if (contentText != null) {
-            contentText.setTextColor(textColor);
+            contentText.setTextColor(selected ? textColor : ContextCompat.getColor(view.getContext(), R.color.natje_text_secondary));
         }
     }
 
@@ -154,19 +155,19 @@ public class VideoCardPresenter extends LongClickPresenter {
                 //.asBitmap() // disable animation (webp, gif)
                 .load(ClickbaitRemover.updateThumbnail(video, mThumbQuality))
                 //.placeholder(mDefaultCardImage)
-                .apply(ViewUtil.glideOptions())
+                .apply(ViewUtil.glideOptions().skipMemoryCache(false))
                 // improve image compression on low end devices
                 .override(mWidth, mHeight)
                 // com.liskovsoft.smartyoutubetv2.tv.util.CacheGlideModule
                 // Cache makes app crashing on old android versions
-                .diskCacheStrategy(VERSION.SDK_INT > 21 ? DiskCacheStrategy.ALL : DiskCacheStrategy.NONE)
+                .diskCacheStrategy(VERSION.SDK_INT > 21 ? DiskCacheStrategy.AUTOMATIC : DiskCacheStrategy.NONE)
                 .listener(mErrorListener)
                 .error(
                     // Updated thumbnail url not found
                     Glide.with(context)
                         .load(video.cardImageUrl) // always working
                         //.placeholder(mDefaultCardImage)
-                        .apply(ViewUtil.glideOptions())
+                        .apply(ViewUtil.glideOptions().skipMemoryCache(false))
                         .listener(mErrorListener)
                         .error(R.drawable.card_placeholder) // R.color.lb_grey
                 )

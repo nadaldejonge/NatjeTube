@@ -259,6 +259,7 @@ public class ScreensaverManager {
         dimContainer.setBackgroundColor(mMode == MODE_SCREENSAVER ? screensaverColor : screenOffColor);
         //dimContainer.setBackgroundResource(mMode == MODE_SCREENSAVER ? screensaverColorResId : screenOffColorResId);
         dimContainer.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (activity instanceof MotherActivity) ((MotherActivity)activity).refreshNightOverlay();
 
         mIsScreenOff = mMode == MODE_SCREEN_OFF && getTweaksData().getScreenOffDimmingPercents() == 100 && show;
 
@@ -351,6 +352,8 @@ public class ScreensaverManager {
 
         if (dimContainer != null) {
             dimContainer.setVisibility(View.GONE);
+            Activity activity = mActivity.get();
+            if (activity instanceof MotherActivity) ((MotherActivity)activity).refreshNightOverlay();
         }
 
         mIsScreenOff = false;

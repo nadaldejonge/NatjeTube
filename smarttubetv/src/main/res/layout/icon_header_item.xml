@@ -1,28 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.leanback.widget.NonOverlappingLinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/header_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:contentDescription="@string/header_icon" />
-
-    <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.marqueetextviewcompat.HeaderMarqueeTextViewCompat
-        android:id="@+id/header_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginStart="10dp"
-
-        android:singleLine="true"
-        android:maxWidth="150sp"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:ellipsize="marquee"
-        android:scrollHorizontally="true"
-
-        style="@style/TextAppearance.Leanback.Header"/>
+<androidx.leanback.widget.NonOverlappingLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="56dp"
+    android:paddingStart="12dp" android:paddingEnd="12dp" android:paddingTop="8dp" android:paddingBottom="8dp"
+    android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/natje_header_focus">
+    <ImageView android:id="@+id/header_icon" android:layout_width="28dp" android:layout_height="28dp" android:contentDescription="@null"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="12dp">
+        <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.marqueetextviewcompat.HeaderMarqueeTextViewCompat
+            android:id="@+id/header_label" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:singleLine="true" android:maxWidth="180dp" android:ellipsize="marquee" android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true" style="@style/Natje.Text.Menu"/>
+        <TextView android:id="@+id/night_status" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:maxWidth="180dp" android:maxLines="2" android:visibility="gone" style="@style/Natje.Text.Metadata"/>
+    </LinearLayout>
 </androidx.leanback.widget.NonOverlappingLinearLayout>

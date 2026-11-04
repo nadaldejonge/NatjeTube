@@ -306,6 +306,16 @@ public class SidebarService implements ProfileChangeListener {
         enableSection(MediaGroup.TYPE_SETTINGS, true);
 
         cleanupPinnedItems();
+        // Idempotent for every account profile; preserve the order of every existing item.
+        if (ensureNightAction(mPinnedItems)) persistState();
+    }
+
+    static boolean ensureNightAction(List<Video> items) {
+        int nightId = com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID;
+        for (Video item : items) if (item != null && item.sectionId == nightId) return false;
+        Video action = new Video(); action.sectionId = nightId;
+        items.add(action);
+        return true;
     }
 
     private void transferOldPinnedItems() {

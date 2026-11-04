@@ -26,6 +26,14 @@
 
     <!-- Color scheme: Teal (Default) -->
     <style name="App.Theme.Leanback.Player" parent="Theme.Leanback">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorPrimary">@color/natje_text</item>
+        <item name="android:textColorSecondary">@color/natje_text_secondary</item>
+        <item name="imageCardViewTitleStyle">@style/Natje.Card.Title</item>
+        <item name="imageCardViewContentStyle">@style/Natje.Card.Content</item>
+        <item name="browseTitleTextStyle">@style/Natje.Browse.Title</item>
+        <item name="rowHeaderStyle">@style/Natje.Row.Header</item>
+        <item name="playbackControlsTimeStyle">@style/Natje.Player.Time</item>
         <!-- <item name="android:windowBackground">@null</item> -->
         <!-- NOTE: don't use transparency because the BackgroundManager won't work (BackgroundManager:778) -->
         <item name="android:windowBackground">@android:color/black</item>
@@ -47,6 +55,14 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="App.Theme.Leanback.Browse" parent="Theme.Leanback.Browse">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorPrimary">@color/natje_text</item>
+        <item name="android:textColorSecondary">@color/natje_text_secondary</item>
+        <item name="imageCardViewTitleStyle">@style/Natje.Card.Title</item>
+        <item name="imageCardViewContentStyle">@style/Natje.Card.Content</item>
+        <item name="browseTitleTextStyle">@style/Natje.Browse.Title</item>
+        <item name="rowHeaderStyle">@style/Natje.Row.Header</item>
+        <item name="playbackControlsTimeStyle">@style/Natje.Player.Time</item>
         <item name="android:windowBackground">@color/shelf_background_dark</item>
         <item name="brandColor">@color/fastlane_background_dark</item>
         <item name="brandAccentColor">@color/fastlane_background</item>
@@ -70,6 +86,14 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="App.Theme.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorPrimary">@color/natje_text</item>
+        <item name="android:textColorSecondary">@color/natje_text_secondary</item>
+        <item name="imageCardViewTitleStyle">@style/Natje.Card.Title</item>
+        <item name="imageCardViewContentStyle">@style/Natje.Card.Content</item>
+        <item name="browseTitleTextStyle">@style/Natje.Browse.Title</item>
+        <item name="rowHeaderStyle">@style/Natje.Row.Header</item>
+        <item name="playbackControlsTimeStyle">@style/Natje.Player.Time</item>
         <item name="android:windowBackground">@color/shelf_background_dark</item>
         <item name="shelfBackground">@color/shelf_background_dark</item>
         <!-- Disable activity transition animations -->
@@ -81,6 +105,14 @@
     </style>
     <!-- AppDialogFragment style -->
     <style name="App.Theme.Leanback.Preferences.Base" parent="Theme.Leanback">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorPrimary">@color/natje_text</item>
+        <item name="android:textColorSecondary">@color/natje_text_secondary</item>
+        <item name="imageCardViewTitleStyle">@style/Natje.Card.Title</item>
+        <item name="imageCardViewContentStyle">@style/Natje.Card.Content</item>
+        <item name="browseTitleTextStyle">@style/Natje.Browse.Title</item>
+        <item name="rowHeaderStyle">@style/Natje.Row.Header</item>
+        <item name="playbackControlsTimeStyle">@style/Natje.Player.Time</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Leanback</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -108,16 +140,16 @@
     <style name="App.Theme.DarkGrey.Player" parent="App.Theme.Leanback.Player">
         <item name="playbackProgressPrimaryColor">@color/red</item>
         <item name="playbackProgressSecondaryColor">@color/light_red</item>
-        <item name="playbackControlsIconHighlightColor">@color/red</item>
+        <item name="playbackControlsIconHighlightColor">@color/natje_text</item>
         <item name="cardProgressStyle">@style/ProgressBarHorizontal.Dark</item>
         <item name="shelfBackground">@color/scheme_grey_shelf_background_dark</item>
         <item name="cardDefaultBackground">@color/scheme_grey_card_background_dark</item>
-        <item name="android:colorAccent" tools:targetApi="21">@color/semi_red</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/natje_accent</item>
     </style>
     <style name="App.Theme.DarkGrey.Browse" parent="App.Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/scheme_grey_shelf_background_dark</item>
         <item name="brandColor">@color/scheme_grey_background_dark</item>
-        <item name="brandAccentColor">@color/semi_red</item>
+        <item name="brandAccentColor">@color/natje_accent</item>
         <item name="cardProgressStyle">@style/ProgressBarHorizontal.Dark</item>
         <item name="shelfBackground">@color/scheme_grey_shelf_background_dark</item>
         <item name="cardDefaultBackground">@color/scheme_grey_card_background_dark</item>
@@ -128,7 +160,7 @@
     </style>
     <style name="App.Theme.DarkGrey.Preferences" parent="App.Theme.Leanback.Preferences">
         <item name="android:colorPrimary" tools:targetApi="21">@color/scheme_grey_background</item>
-        <item name="android:colorAccent" tools:targetApi="21">@color/semi_red</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/natje_accent</item>
     </style>
     <style name="App.Theme.DarkGrey.GuidedStep" parent="App.Theme.Leanback.GuidedStep">
         <item name="android:windowBackground">@color/scheme_grey_shelf_background_dark</item>
@@ -138,18 +170,18 @@
 
     <!--  Color scheme: Red -->
     <style name="App.Theme.Red.Player" parent="App.Theme.Leanback.Player">
-        <item name="playbackProgressPrimaryColor">@color/semi_red</item>
+        <item name="playbackProgressPrimaryColor">@color/natje_accent</item>
         <item name="playbackProgressSecondaryColor">@color/light_red</item>
-        <item name="playbackControlsIconHighlightColor">@color/semi_red</item>
+        <item name="playbackControlsIconHighlightColor">@color/natje_accent</item>
         <item name="cardProgressStyle">@style/ProgressBarHorizontal.Red</item>
         <item name="shelfBackground">@color/scheme_red_shelf_background_dark</item>
         <item name="cardDefaultBackground">@color/scheme_red_card_background_dark</item>
-        <item name="android:colorAccent" tools:targetApi="21">@color/semi_red</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/natje_accent</item>
     </style>
     <style name="App.Theme.Red.Browse" parent="App.Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/scheme_red_shelf_background_dark</item>
         <item name="brandColor">@color/scheme_red_background_dark</item>
-        <item name="brandAccentColor">@color/semi_red</item>
+        <item name="brandAccentColor">@color/natje_accent</item>
         <item name="cardProgressStyle">@style/ProgressBarHorizontal.Red</item>
         <item name="shelfBackground">@color/scheme_red_shelf_background_dark</item>
         <item name="cardDefaultBackground">@color/scheme_red_card_background_dark</item>
@@ -157,7 +189,7 @@
     </style>
     <style name="App.Theme.Red.Preferences" parent="App.Theme.Leanback.Preferences">
         <item name="android:colorPrimary" tools:targetApi="21">@color/scheme_red_background_dark</item>
-        <item name="android:colorAccent" tools:targetApi="21">@color/semi_red</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/natje_accent</item>
     </style>
     <style name="App.Theme.Red.GuidedStep" parent="App.Theme.Leanback.GuidedStep">
         <item name="android:windowBackground">@color/scheme_red_shelf_background_dark</item>
@@ -248,4 +280,10 @@
         <item name="cardSelectedBackground">@color/card_selected_background_white_grey</item>
     </style>
     <!--  End Color scheme: Dark Blue (OLED)  -->
+
+    <style name="Natje.Card.Title" parent="Widget.Leanback.ImageCardView.TitleStyle"><item name="android:textAppearance">@style/Natje.Text.VideoTitle</item><item name="android:fontFamily">sans-serif-medium</item><item name="android:textSize">16sp</item><item name="android:includeFontPadding">true</item></style>
+    <style name="Natje.Card.Content" parent="Widget.Leanback.ImageCardView.ContentStyle"><item name="android:textAppearance">@style/Natje.Text.Metadata</item><item name="android:fontFamily">sans-serif</item><item name="android:textSize">14sp</item></style>
+    <style name="Natje.Browse.Title" parent="Widget.Leanback.Title.Text"><item name="android:textAppearance">@style/Natje.Text.Title</item><item name="android:fontFamily">sans-serif-medium</item></style>
+    <style name="Natje.Row.Header" parent="Widget.Leanback.Row.Header"><item name="android:textAppearance">@style/Natje.Text.Section</item><item name="android:fontFamily">sans-serif-medium</item><item name="android:textSize">20sp</item></style>
+    <style name="Natje.Player.Time" parent="Widget.Leanback.PlaybackControlsTimeStyle"><item name="android:fontFamily">sans-serif</item><item name="android:textSize">16sp</item><item name="android:textColor">@color/natje_text</item></style>
 </resources>

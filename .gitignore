@@ -79,3 +79,15 @@ keystore.properties
 *.p12
 *.dpapi
 google-services.json
+
+# Private runtime data and local toolchains
+/signing/
+/restore-points/
+/delete-map/
+/tools/jdk/
+/tools/android-sdk/
+/tools/gradle-home/
+/tools/project-cache/
+/tools/test-java11/
+*.dpapi
+*.p12

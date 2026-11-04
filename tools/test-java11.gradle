@@ -1,0 +1,6 @@
+// Test JVM only: retain the existing release toolchain and Robolectric dependency.
+def java11Home = System.getenv('NATJETUBE_TEST_JAVA_HOME')
+if (!java11Home) throw new GradleException('Set NATJETUBE_TEST_JAVA_HOME to a JRE/JDK 11 installation.')
+def testJava = new File(java11Home, System.getProperty('os.name').toLowerCase().contains('windows') ? 'bin/java.exe' : 'bin/java')
+if (!testJava.isFile()) throw new GradleException('Test Java executable missing: ' + testJava)
+allprojects { tasks.withType(Test).configureEach { executable = testJava.absolutePath; maxParallelForks = 1 } }

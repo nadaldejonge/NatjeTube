@@ -1,0 +1,29 @@
+<resources>
+    <color name="natje_background">#0F0F0F</color>
+    <color name="natje_surface">#1C1C1C</color>
+    <color name="natje_surface_secondary">#272727</color>
+    <color name="natje_text">#F7F7F7</color>
+    <color name="natje_text_secondary">#AAAAAA</color>
+    <color name="natje_accent">#FF0033</color>
+    <dimen name="natje_space_small">8dp</dimen>
+    <dimen name="natje_space">16dp</dimen>
+    <dimen name="natje_page_margin">40dp</dimen>
+    <dimen name="natje_corner">14dp</dimen>
+    <dimen name="natje_title_size">26sp</dimen>
+    <dimen name="natje_section_size">20sp</dimen>
+    <dimen name="natje_body_size">18sp</dimen>
+    <dimen name="natje_meta_size">14sp</dimen>
+    <dimen name="natje_control_height">48dp</dimen>
+    <integer name="natje_focus_duration">150</integer>
+    <style name="Natje.Text.Title" parent="android:style/TextAppearance.Large"><item name="android:fontFamily">sans-serif-medium</item><item name="android:textSize">@dimen/natje_title_size</item><item name="android:textColor">@color/natje_text</item></style>
+    <style name="Natje.Text.Section" parent="android:style/TextAppearance"><item name="android:fontFamily">sans-serif-medium</item><item name="android:textSize">@dimen/natje_section_size</item><item name="android:textColor">@color/natje_text</item></style>
+    <style name="Natje.Text.VideoTitle" parent="android:style/TextAppearance"><item name="android:fontFamily">sans-serif-medium</item><item name="android:textSize">16sp</item><item name="android:textColor">@color/natje_text</item></style>
+    <style name="Natje.Text.Metadata" parent="android:style/TextAppearance"><item name="android:fontFamily">sans-serif</item><item name="android:textSize">@dimen/natje_meta_size</item><item name="android:textColor">@color/natje_text_secondary</item></style>
+    <style name="Natje.Text.Body" parent="android:style/TextAppearance"><item name="android:fontFamily">sans-serif</item><item name="android:textSize">@dimen/natje_body_size</item><item name="android:textColor">@color/natje_text</item></style>
+    <style name="Natje.Text.Menu" parent="Natje.Text.Body"/>
+    <style name="Natje.Text.Channel" parent="Natje.Text.Metadata"/>
+    <style name="Natje.Text.Settings" parent="Natje.Text.Body"/>
+    <style name="Natje.Text.Dialog" parent="Natje.Text.Body"/>
+    <style name="Natje.Text.Player" parent="Natje.Text.Body"/>
+    <style name="Natje.Text.Time" parent="Natje.Text.Metadata"/>
+</resources>

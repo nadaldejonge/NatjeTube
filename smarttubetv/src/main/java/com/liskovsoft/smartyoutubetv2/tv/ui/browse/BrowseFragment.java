@@ -45,7 +45,7 @@ import java.util.Map;
 /*
  * Main class to show BrowseFragment with header and rows of videos
  */
-public class BrowseFragment extends BrowseSupportFragment implements BrowseView {
+public class BrowseFragment extends BrowseSupportFragment implements BrowseView, com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.Listener {
     private static final String TAG = BrowseFragment.class.getSimpleName();
     private ArrayObjectAdapter mSectionRowAdapter;
     private BrowsePresenter mBrowsePresenter;
@@ -126,6 +126,10 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView 
         getHeadersSupportFragment().setOnHeaderClickedListener(
                 (viewHolder, row) -> {
                     long headerId = row.getHeaderItem().getId();
+                    if (headerId == com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID) {
+                        com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.instance(requireContext()).toggle();
+                        return;
+                    }
                     int newPosition = indexOf(headerId);
 
                     if (getHeadersSupportFragment().getSelectedPosition() != newPosition) {
@@ -142,6 +146,10 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView 
         ((ExtendedHeadersSupportFragment) getHeadersSupportFragment()).setOnHeaderLongPressedListener(
                 (viewHolder, row) -> {
                     long headerId = row.getHeaderItem().getId();
+                    if (headerId == com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID) {
+                        com.liskovsoft.smartyoutubetv2.common.app.presenters.settings.NatjeNightModeSettingsPresenter.show(requireContext());
+                        return;
+                    }
 
                     mBrowsePresenter.onSectionLongPressed((int) headerId);
                 }
@@ -454,6 +462,7 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView 
 
     @Override
     public void onPause() {
+        com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.instance(requireContext()).removeListener(this);
         super.onPause();
 
         if (!mIsFragmentCreated) {
@@ -464,6 +473,7 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView 
     @Override
     public void onResume() {
         super.onResume();
+        com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.instance(requireContext()).addListener(this);
 
         if (!mIsFragmentCreated) {
             mBrowsePresenter.onViewResumed();
@@ -508,6 +518,29 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView 
     }
 
     @Override
+    public void onNightModeChanged() {
+        if (mSectionRowAdapter == null) return;
+        String status = com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.instance(requireContext()).status();
+        if (status.equals(mNightStatus)) return;
+        mNightStatus = status;
+        View root = getView();
+        if (root == null) return;
+        // Listener registration can happen during PageRow layout. Never notify an adapter in that layout pass.
+        root.post(() -> {
+            if (!isAdded() || !isResumed()) return;
+            for (int i=0; i<mSectionRowAdapter.size(); i++) {
+                Object row=mSectionRowAdapter.get(i);
+                if (row instanceof PageRow && ((PageRow)row).getHeaderItem().getId() == com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID) {
+                    mSectionRowAdapter.notifyArrayItemRangeChanged(i,1);
+                    break;
+                }
+            }
+        });
+    }
+
+    private String mNightStatus;
+
+    @Override
     public void updateBadge() {
         if (getContext() == null) {
             return;
@@ -524,6 +557,6 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView 
         Drawable bridgeIcon = Utils.getDrawable(getContext(), splashPresenter.getBridgePackageName(), "app_icon");
 
         // Top right corner logo
-        setBadgeDrawable(bridgeIcon != null ? bridgeIcon : appLogoRes > 0 ? ContextCompat.getDrawable(getContext(), appLogoRes) : null);
+        setBadgeDrawable(appLogoRes > 0 ? ContextCompat.getDrawable(getContext(), appLogoRes) : null);
     }
 }

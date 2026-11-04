@@ -83,6 +83,17 @@ public class IconHeaderItemPresenter extends RowHeaderPresenter {
         if (label != null) {
             label.setText(headerItem.getName());
         }
+        TextView status = rootView.findViewById(R.id.night_status);
+        if (status != null) {
+            boolean night = headerItem.getId() == com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID;
+            status.setVisibility(night ? View.VISIBLE : View.GONE);
+            if (night) status.setText(com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.instance(rootView.getContext()).status());
+            if (iconView != null) {
+                if (night) iconView.setColorFilter(com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.instance(rootView.getContext()).isActive() ? 0xFFFFD18A : 0xFFAAAAAA);
+                else iconView.clearColorFilter();
+            }
+            rootView.setContentDescription(headerItem.getName() + (night ? ". " + status.getText() + ". " + rootView.getContext().getString(R.string.night_hint) : ""));
+        }
     }
 
     @Override
@@ -94,6 +105,7 @@ public class IconHeaderItemPresenter extends RowHeaderPresenter {
     // mUnselectAlpha, and also assumes the xml inflation will return a RowHeaderView.
     @Override
     protected void onSelectLevelChanged(RowHeaderPresenter.ViewHolder holder) {
+        holder.view.setSelected(holder.getSelectLevel() > 0.5f);
         holder.view.setAlpha(mUnselectedAlpha + holder.getSelectLevel() *
                 (1.0f - mUnselectedAlpha));
     }

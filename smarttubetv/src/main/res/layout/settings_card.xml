@@ -17,6 +17,7 @@
         tools:ignore="ContentDescription"/>
     <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.marqueetextviewcompat.MarqueeTextViewCompat
         android:id="@+id/settings_title"
+        style="@style/Natje.Text.Settings"
         android:singleLine="true"
         android:ellipsize="end"
         android:layout_gravity="center"

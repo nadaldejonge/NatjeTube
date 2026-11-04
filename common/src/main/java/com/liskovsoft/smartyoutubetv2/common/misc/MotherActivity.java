@@ -44,6 +44,7 @@ public class MotherActivity extends FragmentActivity {
     private static DisplayMetrics sCachedDisplayMetrics;
     protected static boolean sIsInPipMode;
     private ScreensaverManager mScreensaverManager;
+    private NatjeNightOverlayView mNightOverlay;
     // Make static in case Don't keep activities enabled in Developer settings
     private static List<OnPermissions> mOnPermissions;
     private static List<OnResult> mOnResults;
@@ -220,18 +221,26 @@ public class MotherActivity extends FragmentActivity {
 
         // Restore this activity's screensaver policy after returning to the foreground.
         mScreensaverManager.resume();
+        if (mNightOverlay == null) mNightOverlay = new NatjeNightOverlayView(this);
+        mNightOverlay.resume();
     }
 
     @Override
     protected void onPause() {
+        if (mNightOverlay != null) mNightOverlay.pause();
         super.onPause();
 
         // Stop managing the screensaver so a paused activity cannot keep the display awake.
         mScreensaverManager.suspend();
     }
 
+    public void refreshNightOverlay() {
+        if (mNightOverlay != null) mNightOverlay.invalidate();
+    }
+
     @Override
     protected void onDestroy() {
+        if (mNightOverlay != null) mNightOverlay.release();
         if (mScreensaverManager != null) {
             mScreensaverManager.cleanup();
         }
