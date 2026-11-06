@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Switch;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
+import androidx.core.graphics.ColorUtils;
 import androidx.leanback.widget.PageRow;
 import androidx.leanback.widget.RowHeaderPresenter;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -104,10 +105,17 @@ public class NatjeTvUiTest {
         NatjeNightOverlayView overlay = new NatjeNightOverlayView(controller.get());
         overlay.layout(0, 0, 2, 2); overlay.resume();
         Bitmap bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap); canvas.drawColor(Color.WHITE); overlay.draw(canvas);
-        int result = bitmap.getPixel(0, 0);
+        // Robolectric 4.6 records Canvas commands without rasterising bitmap pixels.
+        // Compose the colours actually issued by the overlay onto a white reference.
+        NightColourCanvas canvas = new NightColourCanvas(bitmap); overlay.draw(canvas);
+        int result = canvas.colour;
         bitmap.recycle(); overlay.release(); controller.pause().stop().destroy();
         return result;
+    }
+    private static final class NightColourCanvas extends Canvas {
+        int colour = Color.WHITE;
+        NightColourCanvas(Bitmap bitmap) { super(bitmap); }
+        @Override public void drawColor(int overlay) { colour = ColorUtils.compositeColors(overlay, colour); }
     }
     @Test public void rangeInitialisationDoesNotPersistButRemoteChangeDoes() {
         Application c=RuntimeEnvironment.getApplication();int[] changes={0};
