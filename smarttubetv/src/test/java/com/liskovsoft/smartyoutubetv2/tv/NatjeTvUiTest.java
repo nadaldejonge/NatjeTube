@@ -77,7 +77,7 @@ public class NatjeTvUiTest {
         assertFalse(NatjeNightModeManager.instance(RuntimeEnvironment.getApplication()).isActive());
         factory.cleanup();
     }
-    @Test public void warmthRangeIsStrongProgressiveAndNeutralAtZero() {
+    @Test public void warmthRangeIsStrongProgressiveAndNeutralAtZero() throws Exception {
         int neutral = renderNightPixel(0, 0);
         int medium = renderNightPixel(50, 0);
         int maximum = renderNightPixel(100, 0);
@@ -88,7 +88,7 @@ public class NatjeTvUiTest {
         assertTrue(Color.blue(medium) < Color.blue(neutral));
         assertTrue(Color.green(maximum) > Color.blue(maximum));
     }
-    @Test public void warmthDoesNotChangeTheIndependentDimmingRange() {
+    @Test public void warmthDoesNotChangeTheIndependentDimmingRange() throws Exception {
         int dimOnly = renderNightPixel(0, 40);
         int warmAndDim = renderNightPixel(100, 40);
         assertEquals(153, Color.red(dimOnly), 1);
@@ -97,17 +97,21 @@ public class NatjeTvUiTest {
         assertEquals(Color.red(dimOnly), Color.red(warmAndDim), 1);
         assertTrue(Color.blue(warmAndDim) < Color.blue(dimOnly));
     }
-    private int renderNightPixel(int warmth, int dim) {
+    private int renderNightPixel(int warmth, int dim) throws Exception {
         ActivityController<Activity> controller = Robolectric.buildActivity(Activity.class).setup();
         NatjeNightModeManager manager = NatjeNightModeManager.instance(controller.get());
         manager.data().enabled = true; manager.data().warmth = warmth;
         manager.data().dim = dim; manager.data().transition = 0; manager.changed();
+        assertTrue(manager.isActive());
         NatjeNightOverlayView overlay = new NatjeNightOverlayView(controller.get());
         overlay.layout(0, 0, 2, 2); overlay.resume();
         Bitmap bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
         // Robolectric 4.6 records Canvas commands without rasterising bitmap pixels.
         // Compose the colours actually issued by the overlay onto a white reference.
-        NightColourCanvas canvas = new NightColourCanvas(bitmap); overlay.draw(canvas);
+        NightColourCanvas canvas = new NightColourCanvas(bitmap);
+        // The legacy View shadow also replaces draw(); invoke the real overlay renderer.
+        Method draw = NatjeNightOverlayView.class.getDeclaredMethod("onDraw", Canvas.class);
+        draw.setAccessible(true); draw.invoke(overlay, canvas);
         int result = canvas.colour;
         bitmap.recycle(); overlay.release(); controller.pause().stop().destroy();
         return result;
