@@ -8,15 +8,21 @@ NatjeTube is de eigen Android TV-app van **NatjeNN**, gemaakt met Codex en gebas
 
 ## Downloaden en bijwerken
 
-**[Download NatjeTube 2.0 voor Android TV](https://github.com/nadaldejonge/NatjeTube/releases/tag/v2.0)**
+**[Download NatjeTube 2.0.1 voor Android TV](https://github.com/nadaldejonge/NatjeTube/releases/tag/v2.0.1)**
 
-Pak `NatjeTube_2.0_universal.apk` bij de release. Deze ondersteunt ARM32 en ARM64. Installeer hem als update over de bestaande NatjeTube-app; verwijder de app niet en wis geen appgegevens. Package-ID en signingcertificaat zijn behouden; versionCode 2459 is hoger dan 2458.
+Pak `NatjeTube_2.0.1_universal.apk` bij de release, gap. Deze ondersteunt ARM32 en ARM64. **Verwijder eerst de oude NatjeTube-app en installeer daarna 2.0.1.** Deze thuisbuild gebruikt op verzoek een nieuwe signingkey. Bij verwijderen verdwijnen je oude instellingen en accountkoppelingen; die stel je na installatie opnieuw in. Volgende updates op deze versie gebruiken dezelfde nieuwe key. Package-ID: `nl.natje.natjetube`; versionCode: 2460.
 
 SHA-256:
 
 ```text
-c86f94f19b1df1651ec5154612b64d6e4a4c569dba01bb86ad085f1ab9d2db0c
+0cf1e3a5df75bbe89e9e475089a7300e1c1a4136e54e576264b6fd6bc35a8aa7
 ```
+
+## Nieuw in 2.0.1
+
+- Night Mode in het menu selecteren sluit de app niet meer af.
+- Veel meer warmte: de maximale ambermenging gaat van 6% naar 60%. Zelfde schuifregelaar, veel groter bereik, gap.
+- De dimregeling blijft zoals in 2.0.
 
 ## Nieuw in 2.0
 
@@ -34,16 +40,16 @@ Video’s zonder de gebruikelijke videoreclames, SponsorBlock, zoeken, accountko
 
 ## Wat is gecontroleerd?
 
-**34 lokale tests en 89 APK-/resourcecontroles slagen.** Eigen signing, package-ID, launcherlabels, branding en native libraries zijn gecontroleerd. Alle acht verpakte native libraries zijn byte-identiek aan de eigen 32.68-release.
+**37 automatische tests slagen.** Handtekening, zipalign, package-ID, versie en TV-launcher zijn gecontroleerd. Alle acht native libraries en alle 688 verpakte PNG-afbeeldingen zijn byte-identiek aan de werkende 2.0-release.
 
-Er was geen TV-stick aangesloten voor deze release. Fysieke installatie, echte remote-longpress, live account-/playbackregressies, HDR-/tunnelingcompositie, PiP en prestaties op de Philips-TV zijn nog niet gevalideerd. Gesimuleerde 1080p-/4K-layouttests bewijzen geen native 4K-interface op een echt apparaat.
+Versie 2.0 is door NatjeNN op de TV getest. De gemelde menucrash en beperkte warmte zijn aangepakt; de nieuwe 2.0.1-APK moet nog op die TV worden getest. De automatische tests vervangen die controle niet.
 
-Warmte is een lichte tintoverlay, geen gekalibreerde Kelvin- of selectieve videowitpuntcorrectie. De filterfunctie regelt geen TV-backlight of Ambilight. HDR, tunneling en hardwaredecoding worden niet stil uitgeschakeld. Bij pauzeren/PiP is het filter uitgeschakeld; de bestaande PiP-route blijft behouden.
+Warmte is een tintoverlay met een groter bereik, geen gekalibreerde Kelvin- of selectieve videowitpuntcorrectie. De filterfunctie regelt geen TV-backlight of Ambilight. HDR, tunneling en hardwaredecoding worden niet stil uitgeschakeld. Bij pauzeren/PiP is het filter uitgeschakeld; de bestaande PiP-route blijft behouden.
 
-Zie [build- en testrapport](docs/BUILD_REPORT_2.0.md), [privacy](PRIVACY.md) en [zelf bouwen](docs/BUILDING.md).
+Zie [build- en testrapport](docs/BUILD_REPORT_2.0.1.md), [privacy](PRIVACY.md) en [zelf bouwen](docs/BUILDING.md).
 
 ## Bron en licenties
 
 NatjeTube is gebaseerd op [SmartTube van yuliskov](https://github.com/yuliskov/SmartTube). Oorspronkelijke copyrightvermeldingen en [MIT-licentie](LICENSE) zijn behouden, evenals de afzonderlijke dependencylicenties. De offline zonberekening gebruikt AOSP/AndroidX-formules onder Apache 2.0; de attributie en tekst zijn [meegeleverd](smarttubetv/src/main/assets/licenses/NatjeNightMode-Apache-2.0.txt). Oorspronkelijke projectdocumentatie staat [apart](docs/SMARTTUBE_UPSTREAM_README.md).
 
-Private signingkeys, wachtwoorden, accounttokens, SDK’s en lokale backups horen niet in deze repository. De downloadbare APK is met de bestaande eigen key ondertekend; die private key wordt niet gedeeld.
+Private signingkeys, wachtwoorden, accounttokens, SDK’s en lokale backups horen niet in deze repository. De 2.0.1-APK gebruikt de nieuwe eigen thuisbuild-key; die private key wordt niet gedeeld.

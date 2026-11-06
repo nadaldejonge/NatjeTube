@@ -15,7 +15,7 @@ Zonder eigen signingconfig levert dit een **unsigned** APK op. Voor handmatige b
 
 De brandingguard controleert alle33 goedgekeurde bestanden tegen `branding/installed-assets.json` en `branding-inventory.json`. Er wordt geen beeldmerk gegenereerd. De guard ondersteunt ook de bestaande lokale structuur met broncode in een submap.
 
-De handmatige GitHub Actions-workflow bouwt uitsluitend een unsigned testartefact. De eigen releasekey staat niet in deze repository of workflow.
+De handmatige GitHub Actions-workflow draait de common- en TV-UI-tests met Java11 en bouwt daarna een unsigned releaseartefact met Java17. De releasekey staat niet in deze repository of workflow. Versie2.0.1 gebruikt op gebruikersverzoek een nieuwe thuisbuild-key: daarvoor is een schone installatie na versie2.0 nodig. Gebruik voor volgende updates de key die bij de geinstalleerde versie hoort.
 
 ## Tests
 
