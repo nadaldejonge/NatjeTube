@@ -16,6 +16,8 @@ import com.liskovsoft.smartyoutubetv2.common.R;
 /** App-window comfort filter. No input, surface changes, bitmap allocation or video readback. */
 public final class NatjeNightOverlayView extends View implements NatjeNightModeManager.Listener,
         ViewTreeObserver.OnGlobalLayoutListener {
+    // Keep a neutral zero while allowing a pronounced amber tint at the top of the slider.
+    private static final float MAX_WARMTH_OPACITY = 0.60f;
     private final NatjeNightModeManager manager;
     private final ViewGroup root;
     private ValueAnimator animator;
@@ -106,7 +108,7 @@ public final class NatjeNightOverlayView extends View implements NatjeNightModeM
         float requested=manager.data().dim/100f*strength;
         // Compose to max(existing dim, night dim), rather than multiplying two dimmers.
         float extra=extraDimming(base,requested);
-        float warm=manager.data().warmth/100f*0.06f*strength*(1-base);
+        float warm=manager.data().warmth/100f*MAX_WARMTH_OPACITY*strength*(1-base);
         if (warm>0) canvas.drawColor(Color.argb(Math.round(255*warm),255,171,80));
         if (extra>0) canvas.drawColor(Color.argb(Math.round(255*extra),0,0,0));
     }
