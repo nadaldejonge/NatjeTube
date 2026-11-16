@@ -20,6 +20,8 @@ public class NatjeHomeFeedTest {
     @Test public void lazyChipsDoNotReplaceOrMixIntoTheMainRecommendations() {
         NatjeHomeFeed feed = new NatjeHomeFeed(); Video first = video("ranked-first");
         feed.update(group(1, "Home", first)); feed.update(group(2, "Gaming"));
+        // The server repeats the already-selected main filter; it must not become a dead duplicate chip.
+        feed.update(group(3, "Home"));
         assertEquals(Collections.singletonList(first), feed.videos()); assertEquals(1, feed.topics().size());
         feed.select(2); assertTrue(feed.current().isEmpty());
         feed.update(group(2, "Gaming", video("game"))); assertEquals("game", feed.videos().get(0).videoId);

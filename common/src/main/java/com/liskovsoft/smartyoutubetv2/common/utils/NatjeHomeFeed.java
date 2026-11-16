@@ -20,7 +20,8 @@ public final class NatjeHomeFeed {
     public List<VideoGroup> topics() {
         List<VideoGroup> result = new ArrayList<>();
         for (VideoGroup group : groups.values())
-            if ((primary == null || group.getId() != primary) && group.getTitle() != null && !group.getTitle().trim().isEmpty()) result.add(group);
+            if ((primary == null || group.getId() != primary) && group.getTitle() != null && !group.getTitle().trim().isEmpty()
+                    && (primary == null || !group.getTitle().equals(groups.get(primary).getTitle()))) result.add(group);
         return result;
     }
     public void select(Integer id) { selected = id != null && groups.containsKey(id) ? id : null; }
