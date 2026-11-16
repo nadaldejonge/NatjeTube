@@ -75,7 +75,8 @@ public class GeneralSettingsPresenter extends BasePresenter<Void> {
         AppDialogPresenter settingsPresenter = AppDialogPresenter.instance(getContext());
 
         appendBootToSection(settingsPresenter);
-        appendEnabledSections(settingsPresenter);
+        // The compact main navigation is fixed; legacy section toggles remain stored for rollback.
+        // Channel/playlist pins are still managed from their existing context menus.
         appendContextMenuItemsCategory(settingsPresenter);
         appendHideContent(settingsPresenter);
         appendAppExitCategory(settingsPresenter);

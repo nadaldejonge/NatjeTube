@@ -44,6 +44,7 @@ import com.liskovsoft.smartyoutubetv2.common.prefs.AccountsData;
 import com.liskovsoft.smartyoutubetv2.common.prefs.BlockedChannelData;
 import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData;
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils;
+import com.liskovsoft.smartyoutubetv2.common.utils.NatjeNavigation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,6 +78,7 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
     private long mLastUpdateTimeMs = -1;
     private int mBootSectionIndex;
     private int mBootstrapSectionId = -1;
+    private final Map<Integer, Integer> mNavigationTabs = new HashMap<>();
 
     private BrowsePresenter(Context context) {
         super(context);
@@ -143,7 +145,7 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
     }
 
     private void refreshIfNeeded() {
-        if (getView() == null || !isHomeSection() || mLastUpdateTimeMs == -1 || System.currentTimeMillis() - mLastUpdateTimeMs < 3 * 60 * 60 * 1_000) {
+        if (getView() == null || !isHomeSection() || mLastUpdateTimeMs == -1 || System.currentTimeMillis() - mLastUpdateTimeMs < 5 * 60 * 1_000) {
             return;
         }
 
@@ -183,13 +185,21 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
     }
 
     private void initSectionMapping() {
+        mSectionsMapping.put(NatjeNavigation.LIBRARY, new BrowseSection(NatjeNavigation.LIBRARY,
+                getContext().getString(R.string.nav_library), BrowseSection.TYPE_HUB_GRID, R.drawable.icon_playlist, false));
+        mSectionsMapping.put(NatjeNavigation.DISCOVER, new BrowseSection(NatjeNavigation.DISCOVER,
+                getContext().getString(R.string.nav_discover), BrowseSection.TYPE_HUB_GRID, R.drawable.icon_trending, false));
+        mSectionsMapping.put(NatjeNavigation.WATCH_LATER, new BrowseSection(NatjeNavigation.WATCH_LATER,
+                getContext().getString(R.string.nav_watch_later), BrowseSection.TYPE_GRID, R.drawable.icon_playlist, true));
+        mSectionsMapping.put(NatjeNavigation.LIKED, new BrowseSection(NatjeNavigation.LIKED,
+                getContext().getString(R.string.nav_liked), BrowseSection.TYPE_GRID, R.drawable.icon_playlist, true));
         mSectionsMapping.put(com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID,
                 new BrowseSection(com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID,
                         getContext().getString(R.string.night_title), BrowseSection.TYPE_ACTION, R.drawable.ic_natje_night_mode, false));
         String country = LocaleUtility.getCurrentLocale(getContext()).getCountry();
         int uploadsType = getMainUIData().isUploadsOldLookEnabled() ? BrowseSection.TYPE_GRID : BrowseSection.TYPE_MULTI_GRID;
 
-        mSectionsMapping.put(MediaGroup.TYPE_HOME, new BrowseSection(MediaGroup.TYPE_HOME, getContext().getString(R.string.header_home), BrowseSection.TYPE_ROW, R.drawable.icon_home, false));
+        mSectionsMapping.put(MediaGroup.TYPE_HOME, new BrowseSection(MediaGroup.TYPE_HOME, getContext().getString(R.string.header_home), BrowseSection.TYPE_HOME_GRID, R.drawable.icon_home, false));
         mSectionsMapping.put(MediaGroup.TYPE_SHORTS, new BrowseSection(MediaGroup.TYPE_SHORTS, getContext().getString(R.string.header_shorts), BrowseSection.TYPE_SHORTS_GRID, R.drawable.icon_shorts));
         mSectionsMapping.put(MediaGroup.TYPE_TRENDING, new BrowseSection(MediaGroup.TYPE_TRENDING, getContext().getString(R.string.header_trending), BrowseSection.TYPE_ROW, R.drawable.icon_trending));
         mSectionsMapping.put(MediaGroup.TYPE_KIDS_HOME, new BrowseSection(MediaGroup.TYPE_KIDS_HOME, getContext().getString(R.string.header_kids_home), BrowseSection.TYPE_ROW, R.drawable.icon_kids_home));
@@ -202,7 +212,7 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
         }
         mSectionsMapping.put(MediaGroup.TYPE_MUSIC, new BrowseSection(MediaGroup.TYPE_MUSIC, getContext().getString(R.string.header_music), BrowseSection.TYPE_ROW, R.drawable.icon_music));
         mSectionsMapping.put(MediaGroup.TYPE_CHANNEL_UPLOADS, new BrowseSection(MediaGroup.TYPE_CHANNEL_UPLOADS, getContext().getString(R.string.header_channels), uploadsType, R.drawable.icon_channels, false));
-        mSectionsMapping.put(MediaGroup.TYPE_SUBSCRIPTIONS, new BrowseSection(MediaGroup.TYPE_SUBSCRIPTIONS, getContext().getString(R.string.header_subscriptions), BrowseSection.TYPE_GRID, R.drawable.icon_subscriptions, false));
+        mSectionsMapping.put(MediaGroup.TYPE_SUBSCRIPTIONS, new BrowseSection(MediaGroup.TYPE_SUBSCRIPTIONS, getContext().getString(R.string.header_subscriptions), BrowseSection.TYPE_HUB_GRID, R.drawable.icon_subscriptions, false));
         mSectionsMapping.put(MediaGroup.TYPE_HISTORY, new BrowseSection(MediaGroup.TYPE_HISTORY, getContext().getString(R.string.header_history), BrowseSection.TYPE_GRID, R.drawable.icon_history, true));
         mSectionsMapping.put(MediaGroup.TYPE_BLOCKED_CHANNELS,
                 new BrowseSection(MediaGroup.TYPE_BLOCKED_CHANNELS, getContext().getString(R.string.header_blocked_channels), BrowseSection.TYPE_GRID, R.drawable.icon_blocked_channels, false));
@@ -308,10 +318,10 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
 
         int bootSectionId = getSidebarService().getBootSectionId();
 
-        // Empty Home on first run fix. Switch to something non-empty.
-        if (!getSignInService().isSigned() && VideoStateService.instance(getContext()).isEmpty()) {
-            bootSectionId = MediaGroup.TYPE_MUSIC;
-        }
+        // Old saved start pages remain reachable inside their new parent tab.
+        int parent = NatjeNavigation.parent(bootSectionId);
+        if (parent != bootSectionId) mNavigationTabs.put(parent, bootSectionId);
+        bootSectionId = parent;
 
         int index = 0;
 
@@ -493,6 +503,42 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
         continueGroup(group);
     }
 
+    public boolean isSignedIn() { return getSignInService().isSigned(); }
+
+    public int getNavigationTab(int root) {
+        Integer selected = mNavigationTabs.get(root);
+        int[] children = NatjeNavigation.children(root);
+        if (selected != null) for (int id : children) if (id == selected) return id;
+        return children.length > 0 ? children[0] : root;
+    }
+
+    public void selectNavigationTab(int root, int id) {
+        boolean allowed = false;
+        for (int child : NatjeNavigation.children(root)) if (child == id) allowed = true;
+        if (!allowed || getView() == null) return;
+        BrowseSection original = mSectionsMapping.get(id);
+        if (original == null) return;
+        mNavigationTabs.put(root, id);
+        disposeActions(); mCurrentVideo = null;
+        int type = original.getType();
+        if (type == BrowseSection.TYPE_HUB_GRID || type == BrowseSection.TYPE_MULTI_GRID || id == MediaGroup.TYPE_USER_PLAYLISTS)
+            type = BrowseSection.TYPE_GRID;
+        mCurrentSection = new BrowseSection(id, original.getTitle(), type, original.getResId(), original.isAuthOnly());
+        if (id == NatjeNavigation.WATCH_LATER || id == NatjeNavigation.LIKED) {
+            Video playlist = new Video(); playlist.channelId = id == NatjeNavigation.WATCH_LATER ? "VLWL" : "VLLL";
+            updateVideoGrid(mCurrentSection, ChannelUploadsPresenter.instance(getContext()).obtainUploadsObservable(playlist), true);
+        } else if (id == MediaGroup.TYPE_USER_PLAYLISTS) {
+            updateVideoGrid(mCurrentSection, getContentService().getPlaylistsObserve(), true);
+        } else {
+            updateSection(mCurrentSection);
+        }
+    }
+
+    public void loadHomeTopic(VideoGroup topic) {
+        if (!isHomeSection() || topic == null || topic.getMediaGroup() == null) return;
+        disposeActions(); continueGroup(topic);
+    }
+
     @Override
     public void onSectionFocused(int sectionId) {
         if (sectionId == com.liskovsoft.smartyoutubetv2.common.misc.NatjeNightModeManager.SECTION_ID) {
@@ -503,6 +549,10 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
         saveSelectedItems(); // save previous state
         mCurrentSection = findSectionById(sectionId);
         mCurrentVideo = null; // fast scroll through the sections (fix empty selected item)
+        if (mCurrentSection != null && mCurrentSection.getType() == BrowseSection.TYPE_HUB_GRID) {
+            selectNavigationTab(sectionId, getNavigationTab(sectionId));
+            return;
+        }
         updateCurrentSection();
         restoreSelectedItems(); // Don't place anywhere else
     }
@@ -664,6 +714,7 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
                     updateLocalGrid(section, localVideos);
                 }
                 break;
+            case BrowseSection.TYPE_HOME_GRID:
             case BrowseSection.TYPE_ROW:
                 Observable<List<MediaGroup>> groups = mRowMapping.get(section.getId());
                 updateVideoRows(section, groups, section.isAuthOnly());
@@ -747,7 +798,8 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
                             filterHomeIfNeeded(mediaGroups);
 
                             for (MediaGroup mediaGroup : mediaGroups) {
-                                if (mediaGroup.isEmpty()) {
+                                if (mediaGroup == null) continue;
+                                if (mediaGroup.isEmpty() && section.getId() != MediaGroup.TYPE_HOME) {
                                     Log.e(TAG, "loadRowsHeader: MediaGroup is empty. Group Name: " + mediaGroup.getTitle());
                                     continue;
                                 }
@@ -759,9 +811,10 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
                                 }
 
                                 getView().updateSection(videoGroup);
-                                mBrowseProcessor.process(videoGroup);
-
-                                continueGroupIfNeeded(videoGroup, false);
+                                if (!videoGroup.isEmpty()) {
+                                    mBrowseProcessor.process(videoGroup);
+                                    continueGroupIfNeeded(videoGroup, false);
+                                }
                             }
                         },
                         error -> {
@@ -968,10 +1021,11 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
             }
         }
 
-        return null;
+        return mSectionsMapping.get(sectionId);
     }
 
     private int findSectionIndex(int sectionId) {
+        sectionId = NatjeNavigation.parent(sectionId);
         if (sectionId == -1) {
             return -1;
         }
@@ -1031,6 +1085,8 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
     }
 
     private void filterHomeIfNeeded(List<MediaGroup> mediaGroups) {
+        // The new grid presents the real ranked main feed and keeps server topic chips separate.
+        if (mCurrentSection != null && mCurrentSection.getType() == BrowseSection.TYPE_HOME_GRID) return;
         if (mediaGroups == null || !isHomeSection()) {
             return;
         }
@@ -1116,6 +1172,9 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
     }
 
     public void selectSection(int sectionId) {
+        if (sectionId == MediaGroup.TYPE_SETTINGS) { NatjeNavigation.showSettings(getContext()); return; }
+        int parentId = NatjeNavigation.parent(sectionId);
+        if (parentId != sectionId) mNavigationTabs.put(parentId, sectionId);
         getViewManager().startView(BrowseView.class); // focus view
 
         if (getView() == null) {
@@ -1146,12 +1205,15 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
 
     @Override
     public void onAccountChanged(Account account) {
+        mNavigationTabs.clear();
+        disposeActions();
         Log.d(TAG, "On account changed");
 
         if (getView() == null) {
             return;
         }
 
+        if (mCurrentSection != null) getView().clearSection(mCurrentSection);
         initSectionMappings();
         updateChannelSorting();
         updatePlaylistsStyle();

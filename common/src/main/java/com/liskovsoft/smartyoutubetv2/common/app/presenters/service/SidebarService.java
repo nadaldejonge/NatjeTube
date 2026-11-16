@@ -45,7 +45,7 @@ public class SidebarService implements ProfileChangeListener {
     }
 
     public Collection<Video> getPinnedItems() {
-        return Collections.unmodifiableList(mPinnedItems);
+        return Collections.unmodifiableList(com.liskovsoft.smartyoutubetv2.common.utils.NatjeNavigation.sidebar(mPinnedItems));
     }
 
     public int addPinnedItem(Video item) {
@@ -129,6 +129,7 @@ public class SidebarService implements ProfileChangeListener {
      * Contains sections and pinned items!
      */
     public boolean isSectionPinned(int sectionId) {
+        if (com.liskovsoft.smartyoutubetv2.common.utils.NatjeNavigation.isPrimary(sectionId)) return true;
         Video section = Helpers.findFirst(mPinnedItems, item -> getSectionId(item) == sectionId);
         return section != null; // by default enable all pinned items
     }
@@ -137,9 +138,13 @@ public class SidebarService implements ProfileChangeListener {
         // 1) Distinguish section from pinned item
         // 2) Add pinned items after the sections
 
-        int index = findPinnedItemIndex(sectionId);
+        int index = 0;
+        for (Video item : getPinnedItems()) {
+            if (getSectionId(item) == sectionId) return index;
+            index++;
+        }
 
-        return index;
+        return -1;
     }
 
     public void renameSection(int sectionId, String newTitle) {
@@ -168,6 +173,7 @@ public class SidebarService implements ProfileChangeListener {
     }
 
     private boolean canShiftSection(int sectionId, int shift) {
+        if (com.liskovsoft.smartyoutubetv2.common.utils.NatjeNavigation.isPrimary(sectionId)) return false;
         int index = findPinnedItemIndex(sectionId);
 
         if (index != -1) {

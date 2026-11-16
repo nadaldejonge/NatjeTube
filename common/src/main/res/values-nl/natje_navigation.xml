@@ -1,0 +1,14 @@
+<resources>
+    <string name="nav_library">Bibliotheek</string>
+    <string name="nav_discover">Ontdekken</string>
+    <string name="nav_watch_later">Later bekijken</string>
+    <string name="nav_liked">Gelikete video’s</string>
+    <string name="nav_new_uploads">Nieuwe video’s</string>
+    <string name="nav_my_channels">Mijn kanalen</string>
+    <string name="nav_all">Alles</string>
+    <string name="nav_search">Zoeken</string>
+    <string name="nav_refresh">Verversen</string>
+    <string name="nav_home_hint">Jouw YouTube-aanbevelingen</string>
+    <string name="nav_home_sign_in">Log in via Instellingen → Accounts voor persoonlijke aanbevelingen.</string>
+    <string name="nav_empty">Hier zijn nog geen video’s. Kies een ander onderwerp of ververs.</string>
+</resources>

@@ -6,6 +6,8 @@ import com.liskovsoft.sharedutils.helpers.Helpers;
 
 public class BrowseSection {
     public static final int TYPE_ACTION = 6;
+    public static final int TYPE_HOME_GRID = 7;
+    public static final int TYPE_HUB_GRID = 8;
     public static final int TYPE_GRID = 0;
     public static final int TYPE_ROW = 1;
     public static final int TYPE_SETTINGS_GRID = 2;

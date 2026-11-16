@@ -13,6 +13,10 @@ import android.widget.Switch;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import androidx.core.graphics.ColorUtils;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.Fragment;
+import androidx.leanback.widget.HeaderItem;
+import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.PageRow;
 import androidx.leanback.widget.RowHeaderPresenter;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -25,6 +29,13 @@ import com.liskovsoft.smartyoutubetv2.tv.presenter.IconHeaderItemPresenter;
 import com.liskovsoft.smartyoutubetv2.tv.ui.browse.SectionHeaderItem;
 import com.liskovsoft.smartyoutubetv2.tv.ui.browse.BrowseSectionFragmentFactory;
 import com.liskovsoft.smartyoutubetv2.tv.ui.browse.NatjeNightActionFragment;
+import com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHomeGridFragment;
+import com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHubGridFragment;
+import com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeChips;
+import com.liskovsoft.smartyoutubetv2.tv.ui.mod.leanback.headers.ExtendedHeadersSupportFragment;
+import com.liskovsoft.smartyoutubetv2.common.utils.NatjeNavigation;
+import com.liskovsoft.mediaserviceinterfaces.data.MediaGroup;
+import android.widget.LinearLayout;
 import com.liskovsoft.smartyoutubetv2.tv.ui.settings.NatjeNightModeSettingsActivity;
 import com.liskovsoft.smartyoutubetv2.tv.ui.widgets.NatjeRangeControl;
 import org.junit.Before;
@@ -76,6 +87,64 @@ public class NatjeTvUiTest {
         assertNotNull(night.getMainFragmentAdapter().getFragmentHost());
         assertFalse(NatjeNightModeManager.instance(RuntimeEnvironment.getApplication()).isActive());
         factory.cleanup();
+    }
+    @Test public void compactPagesMeetTheLeanbackAdapterContract() throws Exception {
+        BrowseSupportFragment browse = new BrowseSupportFragment();
+        BrowseSectionFragmentFactory factory = new BrowseSectionFragmentFactory();
+        browse.getMainFragmentRegistry().registerFragment(PageRow.class, factory);
+        ArrayObjectAdapter rows = new ArrayObjectAdapter();
+        for (int id : new int[]{MediaGroup.TYPE_HOME, MediaGroup.TYPE_SUBSCRIPTIONS, NatjeNavigation.LIBRARY, NatjeNavigation.DISCOVER}) {
+            int type = id == MediaGroup.TYPE_HOME ? BrowseSection.TYPE_HOME_GRID : BrowseSection.TYPE_HUB_GRID;
+            rows.add(new PageRow(new SectionHeaderItem(new BrowseSection(id, "Section", type, R.drawable.icon_home, false))));
+        }
+        Method select = BrowseSupportFragment.class.getDeclaredMethod("createMainFragment", ObjectAdapter.class, int.class);
+        select.setAccessible(true);
+        for (int index : new int[]{0, 1, 2, 3, 0}) {
+            select.invoke(browse, rows, index);
+            Fragment current = browse.getMainFragment();
+            assertTrue(current instanceof BrowseSupportFragment.MainFragmentAdapterProvider);
+            assertSame(current, ((BrowseSupportFragment.MainFragmentAdapterProvider) current).getMainFragmentAdapter().getFragment());
+            if (index == 0) assertTrue(current instanceof NatjeHomeGridFragment);
+            else assertTrue(current instanceof NatjeHubGridFragment);
+        }
+        factory.cleanup();
+    }
+    @Test public void hubArgumentsSurviveFragmentRecreation() {
+        NatjeHubGridFragment original = NatjeHubGridFragment.create(NatjeNavigation.LIBRARY);
+        NatjeHubGridFragment recreated = new NatjeHubGridFragment(); recreated.setArguments(original.getArguments());
+        assertEquals(NatjeNavigation.LIBRARY, recreated.root());
+    }
+    @Test public void topicChipsRemainAboveTheFlexibleGridAndUseRemoteActions() {
+        Application c = RuntimeEnvironment.getApplication(); c.setTheme(R.style.App_Theme_DarkGrey_Browse);
+        LinearLayout chips = new LinearLayout(c); FrameLayout grid = new FrameLayout(c);
+        int[] clicks = {0}, downs = {0};
+        TextView chip = NatjeChips.add(chips, "Gaming", true, () -> clicks[0]++, () -> downs[0]++);
+        View root = NatjeChips.wrap(c, grid, chips, "Home");
+        root.measure(View.MeasureSpec.makeMeasureSpec(1280, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(720, View.MeasureSpec.EXACTLY));
+        root.layout(0, 0, 1280, 720);
+        assertTrue(grid.getHeight() > 400); assertTrue(grid.getTop() > 0); assertTrue(chip.isFocusable());
+        chip.performClick(); assertEquals(1, clicks[0]);
+        chip.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
+        assertEquals(1, downs[0]); assertEquals("Gaming", chip.getContentDescription());
+    }
+    @Test public void searchAndNightSettingsAreOutsideTheScrollingHeaderList() {
+        ActivityController<FragmentActivity> controller = Robolectric.buildActivity(FragmentActivity.class);
+        controller.get().setTheme(R.style.App_Theme_DarkGrey_Browse); controller.setup();
+        ExtendedHeadersSupportFragment headers = new ExtendedHeadersSupportFragment();
+        ArrayObjectAdapter rows = new ArrayObjectAdapter(new ListRowPresenter());
+        for (int i = 0; i < 100; i++) rows.add(new PageRow(new HeaderItem(i, "Channel " + i)));
+        headers.setAdapter(rows);
+        controller.get().getSupportFragmentManager().beginTransaction().add(android.R.id.content, headers).commitNow();
+        LinearLayout root = (LinearLayout) headers.requireView();
+        root.measure(View.MeasureSpec.makeMeasureSpec(360, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(720, View.MeasureSpec.EXACTLY));
+        root.layout(0, 0, 360, 720);
+        View search = root.getChildAt(0), night = root.getChildAt(2), settings = root.getChildAt(3);
+        assertTrue(search.isFocusable()); assertTrue(night.isFocusable()); assertTrue(settings.isFocusable());
+        assertSame(root, night.getParent()); assertSame(root, settings.getParent());
+        assertTrue(settings.getBottom() <= 720); assertTrue(night.getTop() > search.getBottom());
+        assertFalse(NatjeNightModeManager.instance(controller.get()).isActive());
+        night.performClick(); assertTrue(NatjeNightModeManager.instance(controller.get()).isActive());
+        controller.pause().stop().destroy();
     }
     @Test public void warmthRangeIsStrongProgressiveAndNeutralAtZero() throws Exception {
         int neutral = renderNightPixel(0, 0);

@@ -61,6 +61,12 @@ public class BrowseSectionFragmentFactory extends BrowseSupportFragment.Fragment
         Fragment fragment = null;
 
         switch (mFragmentType) {
+            case BrowseSection.TYPE_HOME_GRID:
+                fragment = new com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHomeGridFragment();
+                break;
+            case BrowseSection.TYPE_HUB_GRID:
+                fragment = com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHubGridFragment.create((int) header.getId());
+                break;
             case BrowseSection.TYPE_ACTION:
                 fragment = new NatjeNightActionFragment();
                 break;
