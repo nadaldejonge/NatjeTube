@@ -27,6 +27,10 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle state) {
         View list = super.onCreateView(inflater, parent, state);
         LinearLayout root = new LinearLayout(requireContext()); root.setOrientation(LinearLayout.VERTICAL);
+        // Leanback's dock is wrap_content. The replacement root must retain the original
+        // fixed sidebar width; its default MATCH_PARENT params expand the footer over the videos.
+        root.setLayoutParams(new ViewGroup.LayoutParams(
+                getResources().getDimensionPixelSize(R.dimen.lb_browse_headers_width), ViewGroup.LayoutParams.MATCH_PARENT));
         int space = getResources().getDimensionPixelSize(R.dimen.natje_space);
         root.setPadding(0, space, 0, space);
         search = control(getString(R.string.nav_search));

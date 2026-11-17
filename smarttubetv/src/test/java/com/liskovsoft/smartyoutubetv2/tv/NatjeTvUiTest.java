@@ -128,20 +128,39 @@ public class NatjeTvUiTest {
         assertEquals(1, downs[0]); assertEquals("Gaming", chip.getContentDescription());
     }
     @Test public void searchAndNightSettingsAreOutsideTheScrollingHeaderList() {
+        assertSidebarBounds(1920, 1080);
+    }
+    @Test @Config(qualifiers="w1920dp-h1080dp-land-xhdpi")
+    public void sidebarFooterStaysWithinTheMenuOn4kScreens() {
+        assertSidebarBounds(3840, 2160);
+    }
+    private void assertSidebarBounds(int width, int height) {
         ActivityController<FragmentActivity> controller = Robolectric.buildActivity(FragmentActivity.class);
         controller.get().setTheme(R.style.App_Theme_DarkGrey_Browse); controller.setup();
+        controller.get().setContentView(R.layout.lb_browse_fragment);
         ExtendedHeadersSupportFragment headers = new ExtendedHeadersSupportFragment();
         ArrayObjectAdapter rows = new ArrayObjectAdapter(new ListRowPresenter());
         for (int i = 0; i < 100; i++) rows.add(new PageRow(new HeaderItem(i, "Channel " + i)));
         headers.setAdapter(rows);
-        controller.get().getSupportFragmentManager().beginTransaction().add(android.R.id.content, headers).commitNow();
+        controller.get().getSupportFragmentManager().beginTransaction().add(R.id.browse_headers_dock, headers).commitNow();
         LinearLayout root = (LinearLayout) headers.requireView();
-        root.measure(View.MeasureSpec.makeMeasureSpec(360, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(720, View.MeasureSpec.EXACTLY));
-        root.layout(0, 0, 360, 720);
+        View screen = controller.get().findViewById(R.id.browse_dummy);
+        screen.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
+        screen.layout(0, 0, width, height);
+        int sidebarWidth = controller.get().getResources().getDimensionPixelSize(R.dimen.lb_browse_headers_width);
         View search = root.getChildAt(0), night = root.getChildAt(2), settings = root.getChildAt(3);
+        assertEquals(sidebarWidth, root.getWidth());
+        assertEquals(sidebarWidth, night.getWidth()); assertEquals(sidebarWidth, settings.getWidth());
+        assertTrue(root.getWidth() < width / 2);
+        assertTrue(night.getRight() <= sidebarWidth); assertTrue(settings.getRight() <= sidebarWidth);
         assertTrue(search.isFocusable()); assertTrue(night.isFocusable()); assertTrue(settings.isFocusable());
         assertSame(root, night.getParent()); assertSame(root, settings.getParent());
-        assertTrue(settings.getBottom() <= 720); assertTrue(night.getTop() > search.getBottom());
+        assertTrue(settings.getBottom() <= height); assertTrue(night.getTop() > search.getBottom());
+        // Negative control: the old default params expand inside this same real wrap_content dock.
+        root.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT; root.requestLayout();
+        screen.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
+        screen.layout(0, 0, width, height);
+        assertTrue("The old layout must reproduce the over-wide footer", root.getWidth() > sidebarWidth);
         assertFalse(NatjeNightModeManager.instance(controller.get()).isActive());
         night.performClick(); assertTrue(NatjeNightModeManager.instance(controller.get()).isActive());
         controller.pause().stop().destroy();
