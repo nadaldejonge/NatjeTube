@@ -139,8 +139,8 @@ public class NatjeTvUiTest {
         controller.get().setTheme(R.style.App_Theme_DarkGrey_Browse); controller.setup();
         controller.get().setContentView(R.layout.lb_browse_fragment);
         ExtendedHeadersSupportFragment headers = new ExtendedHeadersSupportFragment();
-        ArrayObjectAdapter rows = new ArrayObjectAdapter(new ListRowPresenter());
-        for (int i = 0; i < 100; i++) rows.add(new PageRow(new HeaderItem(i, "Channel " + i)));
+        ArrayObjectAdapter rows = new ArrayObjectAdapter(new IconHeaderItemPresenter(R.drawable.icon_home, null));
+        for (int i = 0; i < 4; i++) rows.add(new PageRow(new HeaderItem(i, "Channel " + i)));
         headers.setAdapter(rows);
         controller.get().getSupportFragmentManager().beginTransaction().add(R.id.browse_headers_dock, headers).commitNow();
         LinearLayout root = (LinearLayout) headers.requireView();
