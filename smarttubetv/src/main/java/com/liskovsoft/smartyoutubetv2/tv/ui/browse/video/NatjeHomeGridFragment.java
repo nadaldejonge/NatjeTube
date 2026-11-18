@@ -74,5 +74,6 @@ public final class NatjeHomeGridFragment extends VideoGridFragment {
     private void focusGrid() { if (getBrowseGrid() != null) getBrowseGrid().requestFocus(); }
     @Override public void clear() { feed.clear(); super.clear(); rebuildChips(); }
     @Override public boolean isEmpty() { return feed.videos().isEmpty(); }
+    public void focusFilters() { if (selectedChip != null) selectedChip.requestFocus(); }
     @Override public void onDestroyView() { chips = null; selectedChip = null; super.onDestroyView(); }
 }

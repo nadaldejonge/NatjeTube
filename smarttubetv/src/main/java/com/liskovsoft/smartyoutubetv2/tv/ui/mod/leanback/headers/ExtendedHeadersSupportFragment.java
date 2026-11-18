@@ -54,6 +54,9 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
         ((TextView) button.findViewById(R.id.header_label)).setText(label);
         ((android.widget.ImageView) button.findViewById(R.id.header_icon)).setImageResource(icon);
         button.setFocusable(true); button.setClickable(true);
+        float alpha = getResources().getFraction(R.fraction.lb_browse_header_unselect_alpha, 1, 1);
+        button.setAlpha(alpha);
+        button.setOnFocusChangeListener((v, focused) -> v.setAlpha(focused ? 1f : alpha));
         button.setLayoutParams(new LinearLayout.LayoutParams(-1,
                 getResources().getDimensionPixelSize(R.dimen.natje_sidebar_row_height)));
         button.setOnKeyListener((v, code, event) -> {

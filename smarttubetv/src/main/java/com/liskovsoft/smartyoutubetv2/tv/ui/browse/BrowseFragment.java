@@ -361,7 +361,12 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView,
     public void focusOnContent() {
         startHeadersTransitionSafe(false);
         if (getMainFragment() != null && getMainFragment().getView() != null) {
-            getMainFragment().getView().requestFocus();
+            Fragment content = getMainFragment();
+            if (content instanceof com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHomeGridFragment)
+                ((com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHomeGridFragment) content).focusFilters();
+            else if (content instanceof com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHubGridFragment)
+                ((com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.NatjeHubGridFragment) content).focusFilters();
+            else content.getView().requestFocus();
         }
     }
 

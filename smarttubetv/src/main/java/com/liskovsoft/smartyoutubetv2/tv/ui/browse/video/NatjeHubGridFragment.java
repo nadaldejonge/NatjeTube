@@ -49,5 +49,6 @@ public final class NatjeHubGridFragment extends VideoGridFragment {
             return false;
         });
     }
+    public void focusFilters() { if (selectedChip != null) selectedChip.requestFocus(); }
     @Override public void onDestroyView() { chips = null; selectedChip = null; super.onDestroyView(); }
 }
