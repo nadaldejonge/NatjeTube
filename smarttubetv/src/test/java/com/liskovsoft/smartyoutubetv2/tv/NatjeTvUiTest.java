@@ -127,11 +127,11 @@ public class NatjeTvUiTest {
         chip.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
         assertEquals(1, downs[0]); assertEquals("Gaming", chip.getContentDescription());
     }
-    @Test public void searchAndNightSettingsAreOutsideTheScrollingHeaderList() {
+    @Test public void sidebarActionsHaveMatchingIconsAndContiguousRows() {
         assertSidebarBounds(1920, 1080);
     }
     @Test @Config(qualifiers="w1920dp-h1080dp-land-xhdpi")
-    public void sidebarFooterStaysWithinTheMenuOn4kScreens() {
+    public void sidebarActionsStayWithinTheMenuOn4kScreens() {
         assertSidebarBounds(3840, 2160);
     }
     private void assertSidebarBounds(int width, int height) {
@@ -150,20 +150,38 @@ public class NatjeTvUiTest {
         int sidebarWidth = controller.get().getResources().getDimensionPixelSize(R.dimen.lb_browse_headers_width);
         View search = root.getChildAt(0), night = root.getChildAt(2), settings = root.getChildAt(3);
         assertEquals(sidebarWidth, root.getWidth());
-        assertEquals(sidebarWidth, night.getWidth()); assertEquals(sidebarWidth, settings.getWidth());
+        assertEquals(sidebarWidth - root.getPaddingLeft() - root.getPaddingRight(), night.getWidth()); assertEquals(night.getWidth(), settings.getWidth());
         assertTrue(root.getWidth() < width / 2);
         assertTrue(night.getRight() <= sidebarWidth); assertTrue(settings.getRight() <= sidebarWidth);
         assertTrue(search.isFocusable()); assertTrue(night.isFocusable()); assertTrue(settings.isFocusable());
         assertSame(root, night.getParent()); assertSame(root, settings.getParent());
         assertTrue(settings.getBottom() <= height); assertTrue(night.getTop() > search.getBottom());
-        // Negative control: the old default params expand inside this same real wrap_content dock.
-        root.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT; root.requestLayout();
-        screen.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
-        screen.layout(0, 0, width, height);
-        assertTrue("The old layout must reproduce the over-wide footer", root.getWidth() > sidebarWidth);
+        assertEquals(night.getBottom(), settings.getTop());
+        assertEquals(root.getChildAt(1).getBottom(), night.getTop());
+        for (View action : new View[]{search, night, settings}) {
+            assertNotNull(((android.widget.ImageView) action.findViewById(R.id.header_icon)).getDrawable());
+            assertNotNull(action.findViewById(R.id.header_label));
+            assertEquals(controller.get().getResources().getDimensionPixelSize(R.dimen.natje_sidebar_row_height), action.getHeight());
+        }
+        search.requestFocus();
+        search.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
+        assertTrue(headers.getVerticalGridView().hasFocus());
+        assertEquals(0, headers.getVerticalGridView().getSelectedPosition());
+        night.requestFocus();
+        night.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP));
+        assertTrue(headers.getVerticalGridView().hasFocus());
+        assertEquals(3, headers.getVerticalGridView().getSelectedPosition());
         assertFalse(NatjeNightModeManager.instance(controller.get()).isActive());
         night.performClick(); assertTrue(NatjeNightModeManager.instance(controller.get()).isActive());
         controller.pause().stop().destroy();
+    }
+    @Test public void browseTitleCannotOverlayChipsOrTakeFocus() {
+        Application c = RuntimeEnvironment.getApplication();
+        com.liskovsoft.smartyoutubetv2.tv.ui.browse.SidebarTitleView title = new com.liskovsoft.smartyoutubetv2.tv.ui.browse.SidebarTitleView(c);
+        assertEquals(0, title.getChildCount()); assertFalse(title.isFocusable());
+        assertNull(title.getTitleViewAdapter().getSearchAffordanceView());
+        title.getTitleViewAdapter().updateComponentsVisibility(androidx.leanback.widget.TitleViewAdapter.FULL_VIEW_VISIBLE);
+        assertEquals(0, title.getChildCount());
     }
     @Test public void warmthRangeIsStrongProgressiveAndNeutralAtZero() throws Exception {
         int neutral = renderNightPixel(0, 0);

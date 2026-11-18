@@ -22,7 +22,7 @@ import com.liskovsoft.smartyoutubetv2.common.utils.NatjeNavigation;
 import com.liskovsoft.smartyoutubetv2.tv.R;
 
 public class ExtendedHeadersSupportFragment extends HeadersSupportFragment implements NatjeNightModeManager.Listener {
-    private TextView search, night, settings;
+    private View search, night, settings;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle state) {
         View list = super.onCreateView(inflater, parent, state);
@@ -32,39 +32,63 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
         root.setLayoutParams(new ViewGroup.LayoutParams(
                 getResources().getDimensionPixelSize(R.dimen.lb_browse_headers_width), ViewGroup.LayoutParams.MATCH_PARENT));
         int space = getResources().getDimensionPixelSize(R.dimen.natje_space);
-        root.setPadding(0, space, 0, space);
-        search = control(getString(R.string.nav_search));
+        root.setPadding(space, space, space, space);
+        search = control(getString(R.string.nav_search), R.drawable.lb_ic_in_app_search);
         search.setOnClickListener(v -> SearchPresenter.instance(requireContext()).startSearch(null));
-        root.addView(search); root.addView(list, new LinearLayout.LayoutParams(-1, 0, 1));
-        night = control(getString(R.string.night_title));
+        root.addView(search);
+        list.setPadding(0, 0, 0, 0);
+        View fade = list.findViewById(R.id.fade_out_edge); if (fade != null) fade.setVisibility(View.GONE);
+        root.addView(list, new LinearLayout.LayoutParams(-1, getResources().getDimensionPixelSize(R.dimen.natje_sidebar_row_height) * 4));
+        night = control(getString(R.string.nav_night_mode), R.drawable.ic_natje_night_mode);
         night.setOnClickListener(v -> NatjeNightModeManager.instance(requireContext()).toggle());
         night.setOnLongClickListener(v -> { NatjeNightModeSettingsPresenter.show(requireContext()); return true; });
-        night.setOnKeyListener((v, code, event) -> {
-            if (KeyHelpers.isMenuKey(code)) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) NatjeNightModeSettingsPresenter.show(requireContext());
-                return true;
-            }
-            return false;
-        });
-        settings = control(getString(R.string.header_settings));
+        settings = control(getString(R.string.header_settings), R.drawable.icon_settings);
         settings.setOnClickListener(v -> NatjeNavigation.showSettings(requireContext()));
         root.addView(night); root.addView(settings);
         night.setNextFocusDownId(settings.getId()); settings.setNextFocusUpId(night.getId());
         return root;
     }
-    private TextView control(String label) {
-        TextView button = new TextView(requireContext()); button.setId(View.generateViewId());
-        button.setTextAppearance(requireContext(), R.style.Natje_Text_Menu); button.setText(label);
-        button.setGravity(Gravity.CENTER_VERTICAL); button.setFocusable(true); button.setClickable(true);
-        int space = getResources().getDimensionPixelSize(R.dimen.natje_space);
-        button.setPadding(space, 0, space, 0); button.setBackgroundResource(R.drawable.natje_header_focus);
-        button.setLayoutParams(new LinearLayout.LayoutParams(-1, getResources().getDimensionPixelSize(R.dimen.natje_control_height)));
+    private View control(String label, int icon) {
+        View button = LayoutInflater.from(requireContext()).inflate(R.layout.icon_header_item, null);
+        button.setId(View.generateViewId());
+        ((TextView) button.findViewById(R.id.header_label)).setText(label);
+        ((android.widget.ImageView) button.findViewById(R.id.header_icon)).setImageResource(icon);
+        button.setFocusable(true); button.setClickable(true);
+        button.setLayoutParams(new LinearLayout.LayoutParams(-1,
+                getResources().getDimensionPixelSize(R.dimen.natje_sidebar_row_height)));
+        button.setOnKeyListener((v, code, event) -> {
+            if (event.getAction() != KeyEvent.ACTION_DOWN) return false;
+            if (code == KeyEvent.KEYCODE_DPAD_RIGHT) return focusContent();
+            if (v == search && code == KeyEvent.KEYCODE_DPAD_DOWN) return focusHeader(0);
+            if (v == search && code == KeyEvent.KEYCODE_DPAD_UP) return true;
+            if (v == night && code == KeyEvent.KEYCODE_DPAD_UP) return focusHeader(getAdapter().size() - 1);
+            if (v == night && KeyHelpers.isMenuKey(code)) { NatjeNightModeSettingsPresenter.show(requireContext()); return true; }
+            if (v == settings && code == KeyEvent.KEYCODE_DPAD_DOWN) return true;
+            return false;
+        });
         return button;
+    }
+    private boolean focusHeader(int position) {
+        if (getVerticalGridView() == null || position < 0) return false;
+        getVerticalGridView().setSelectedPosition(position);
+        return getVerticalGridView().requestFocus();
+    }
+    private boolean focusContent() {
+        if (getParentFragment() instanceof com.liskovsoft.smartyoutubetv2.tv.ui.browse.BrowseFragment) {
+            ((com.liskovsoft.smartyoutubetv2.tv.ui.browse.BrowseFragment) getParentFragment()).focusOnContent();
+            return true;
+        }
+        return false;
     }
     @Override public void onViewCreated(View view, Bundle state) {
         super.onViewCreated(view, state);
         if (getVerticalGridView() != null) {
-            View grid = getVerticalGridView(); grid.setPadding(grid.getPaddingLeft(), 0, grid.getPaddingRight(), 0);
+            androidx.leanback.widget.VerticalGridView grid = getVerticalGridView();
+            grid.setPadding(0, 0, 0, 0); grid.setVerticalSpacing(0);
+            grid.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+            grid.setWindowAlignment(androidx.leanback.widget.BaseGridView.WINDOW_ALIGN_LOW_EDGE);
+            grid.setWindowAlignmentOffset(0); grid.setWindowAlignmentOffsetPercent(0);
+            grid.setItemAlignmentOffset(0); grid.setItemAlignmentOffsetPercent(0);
             night.setNextFocusUpId(grid.getId()); search.setNextFocusDownId(grid.getId());
         }
     }
@@ -72,8 +96,7 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
     @Override public void onPause() { NatjeNightModeManager.instance(requireContext()).removeListener(this); super.onPause(); }
     @Override public void onNightModeChanged() {
         if (night != null) { night.setSelected(NatjeNightModeManager.instance(requireContext()).isActive());
-            night.setText(getString(R.string.night_title) + " · " + getString(
-                    NatjeNightModeManager.instance(requireContext()).isActive() ? R.string.night_on : R.string.night_off));
+            
             night.setContentDescription(getString(R.string.night_title) + ": " + NatjeNightModeManager.instance(requireContext()).status()); }
     }
     @Override public void onDestroyView() { search = null; night = null; settings = null; super.onDestroyView(); }
@@ -130,6 +153,7 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
                     // NEW CODE
                     headerView.setOnKeyListener((v, keyCode, event) -> {
                         if (event.getAction() == KeyEvent.ACTION_DOWN && getAdapter() != null) {
+                            if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) return focusContent();
                             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN && getAdapter().size() > 0
                                     && viewHolder.getItem() == getAdapter().get(getAdapter().size() - 1) && night != null)
                                 return night.requestFocus();

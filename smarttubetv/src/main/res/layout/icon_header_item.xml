@@ -1,14 +1,14 @@
 <androidx.leanback.widget.NonOverlappingLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="56dp"
+    android:layout_width="match_parent" android:layout_height="@dimen/natje_sidebar_row_height"
     android:paddingStart="12dp" android:paddingEnd="12dp" android:paddingTop="8dp" android:paddingBottom="8dp"
     android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/natje_header_focus">
     <ImageView android:id="@+id/header_icon" android:layout_width="28dp" android:layout_height="28dp" android:contentDescription="@null"/>
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="12dp">
         <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.marqueetextviewcompat.HeaderMarqueeTextViewCompat
             android:id="@+id/header_label" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:singleLine="true" android:maxWidth="180dp" android:ellipsize="marquee" android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true" android:maxWidth="160dp" android:ellipsize="marquee" android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true" style="@style/Natje.Text.Menu"/>
         <TextView android:id="@+id/night_status" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:maxWidth="180dp" android:maxLines="2" android:visibility="gone" style="@style/Natje.Text.Metadata"/>
+            android:maxWidth="160dp" android:maxLines="2" android:visibility="gone" style="@style/Natje.Text.Metadata"/>
     </LinearLayout>
 </androidx.leanback.widget.NonOverlappingLinearLayout>

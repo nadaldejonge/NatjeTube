@@ -26,7 +26,11 @@ public final class NatjeHomeGridFragment extends VideoGridFragment {
     }
     @Override public void onViewCreated(View view, Bundle state) {
         super.onViewCreated(view, state);
+        getBrowseGrid().setPadding(getBrowseGrid().getPaddingLeft(), 0, getBrowseGrid().getPaddingRight(), 0);
         getBrowseGrid().setOnKeyInterceptListener(event -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT
+                    && getPosition() % getGridPresenter().getNumberOfColumns() == 0)
+                return NatjeChips.focusSidebar(getView());
             if (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_UP && event.getAction() == KeyEvent.ACTION_DOWN
                     && getPosition() < getGridPresenter().getNumberOfColumns() && selectedChip != null) return selectedChip.requestFocus();
             return false;
