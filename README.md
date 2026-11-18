@@ -8,20 +8,24 @@ NatjeTube is de eigen Android TV-app van **NatjeNN**, gemaakt met Codex en gebas
 
 ## Downloaden en bijwerken
 
-**[Download NatjeTube 2.1.1 voor Android TV](https://github.com/nadaldejonge/NatjeTube/releases/tag/v2.1.1)**
+**[Download NatjeTube 2.1.2 voor Android TV](https://github.com/nadaldejonge/NatjeTube/releases/tag/v2.1.2)**
 
-Pak `NatjeTube_2.1.1_universal.apk`, gap. Installeer als gewone update over 2.0.1 of 2.1.0; dezelfde signingkey, dus je hoeft niets te verwijderen of appgegevens te wissen. Alleen bij de oorspronkelijke 2.0-release met de oudere key moet je eerst opnieuw installeren. Package-ID: `nl.natje.natjetube`; versionCode: 2462.
+Pak `NatjeTube_2.1.2_universal.apk`, gap. Installeer als gewone update over 2.0.1, 2.1.0 of 2.1.1; dezelfde signingkey, dus je hoeft niets te verwijderen of appgegevens te wissen. Alleen bij de oorspronkelijke 2.0-release met de oudere key moet je eerst opnieuw installeren. Package-ID: `nl.natje.natjetube`; versionCode: 2463.
 
 SHA-256:
 
 ```text
-fcda6aa0b31b17916b90a14c5480cc8dca58741053a01a1094d27ae6fa545eb4
+2335356eb2b08ea7c90f756da27077b49ac4826d1032931865d2001e49cdf30e
 ```
 
-## Nieuw in 2.1.1
+## Nieuw in 2.1.2
 
-- Night Mode en Instellingen blijven binnen de zijbalk; de knoppen rekken niet meer over het videoveld.
-- De breedtetest gebruikt nu de echte schermcontainer, op 1080p en 4K, en reproduceert ook de oude fout.
+- Eén aansluitende zijbalk: zoeken, Home, Subscriptions, Library, Explore, Night Mode en Settings, met gelijke rijen en eigen iconen.
+- Compactere menubreedte; de hoofdsecties blijven op hun plek bij het selecteren.
+- Geen zwevende zoek-/accountknoppen, klok, datum of logo meer over de browsefilters. Accountbeheer staat onder Settings.
+- Filters krijgen een eigen horizontale rij met zichtbare selectie en focus.
+- Directe pijltjesroutes tussen menu, filters en video's; Night Mode en Settings zijn in beide richtingen bereikbaar.
+- Bestaande kleuren, lettertypes en accounts blijven behouden.
 
 ## Indeling van 2.1.0
 
@@ -53,16 +57,16 @@ Video’s zonder de gebruikelijke videoreclames, SponsorBlock, zoeken, accountko
 
 ## Wat is gecontroleerd?
 
-**51 automatische tests slagen.** De nieuwe breedtetest gebruikt de echte schermcontainer en controleert zowel de correcte zijbalkmaat als de oude fout. APK-handtekening, zipalign, package-ID en versie zijn gecontroleerd.
+**52 automatische tests slagen.** De zijbalktest gebruikt de productie-icoonpresenter en echte schermcontainer op 1080p en 4K, inclusief de uitlijning die Browse bij starten toepast, vaste rijposities en de verbindingen naar de actieknoppen. De APK is daarnaast gestart en met D-pad bediend in een Android TV-emulator. APK-handtekening, zipalign, package-ID en versie zijn gecontroleerd.
 
-Versie 2.0 is door NatjeNN op de TV getest. De gemelde menucrash en beperkte warmte zijn aangepakt; de nieuwe 2.0.1-APK moet nog op die TV worden getest. De automatische tests vervangen die controle niet.
+De persoonlijke Home-feed is niet in de emulator beoordeeld: die is niet ingelogd. Deze versie is nog niet op de fysieke tv geïnstalleerd.
 
 Warmte is een tintoverlay met een groter bereik, geen gekalibreerde Kelvin- of selectieve videowitpuntcorrectie. De filterfunctie regelt geen TV-backlight of Ambilight. HDR, tunneling en hardwaredecoding worden niet stil uitgeschakeld. Bij pauzeren/PiP is het filter uitgeschakeld; de bestaande PiP-route blijft behouden.
 
-Zie [build- en testrapport](docs/BUILD_REPORT_2.1.1.md), [privacy](PRIVACY.md) en [zelf bouwen](docs/BUILDING.md).
+Zie [build- en testrapport](docs/BUILD_REPORT_2.1.2.md), [privacy](PRIVACY.md) en [zelf bouwen](docs/BUILDING.md).
 
 ## Bron en licenties
 
 NatjeTube is gebaseerd op [SmartTube van yuliskov](https://github.com/yuliskov/SmartTube). Oorspronkelijke copyrightvermeldingen en [MIT-licentie](LICENSE) zijn behouden, evenals de afzonderlijke dependencylicenties. De offline zonberekening gebruikt AOSP/AndroidX-formules onder Apache 2.0; de attributie en tekst zijn [meegeleverd](smarttubetv/src/main/assets/licenses/NatjeNightMode-Apache-2.0.txt). Oorspronkelijke projectdocumentatie staat [apart](docs/SMARTTUBE_UPSTREAM_README.md).
 
-Private signingkeys, wachtwoorden, accounttokens, SDK’s en lokale backups horen niet in deze repository. De 2.0.1-, 2.1.0- en 2.1.1-APK gebruiken dezelfde eigen thuisbuild-key; die private key wordt niet gedeeld.
+Private signingkeys, wachtwoorden, accounttokens, SDK’s en lokale backups horen niet in deze repository. De 2.0.1-, 2.1.0- en 2.1.2-APK gebruiken dezelfde eigen thuisbuild-key; die private key wordt niet gedeeld.
