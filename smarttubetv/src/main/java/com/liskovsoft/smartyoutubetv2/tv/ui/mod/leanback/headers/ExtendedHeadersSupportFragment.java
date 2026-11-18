@@ -96,7 +96,7 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
     @Override public void onPause() { NatjeNightModeManager.instance(requireContext()).removeListener(this); super.onPause(); }
     @Override public void onNightModeChanged() {
         if (night != null) { night.setSelected(NatjeNightModeManager.instance(requireContext()).isActive());
-            
+
             night.setContentDescription(getString(R.string.night_title) + ": " + NatjeNightModeManager.instance(requireContext()).status()); }
     }
     @Override public void onDestroyView() { search = null; night = null; settings = null; super.onDestroyView(); }

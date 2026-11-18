@@ -90,6 +90,14 @@ public class BrowseFragment extends BrowseSupportFragment implements BrowseView,
         mCrashRestorer.persistVideo(outState, mBrowsePresenter.getCurrentVideo());
     }
 
+    @Override public View onInflateTitleView(LayoutInflater inflater, ViewGroup parent, Bundle state) {
+        return new SidebarTitleView(parent.getContext());
+    }
+    public void focusSidebar() {
+        startHeadersTransitionSafe(true);
+        if (getHeadersSupportFragment().getVerticalGridView() != null)
+            getHeadersSupportFragment().getVerticalGridView().requestFocus();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = super.onCreateView(inflater, container, savedInstanceState);
