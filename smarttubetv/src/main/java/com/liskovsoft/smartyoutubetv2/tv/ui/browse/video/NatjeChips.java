@@ -44,7 +44,7 @@ public final class NatjeChips {
         button.setText(label); button.setSelected(selected); button.setContentDescription(label);
         button.setSingleLine(true);
         button.setFocusable(true); button.setClickable(true); button.setGravity(Gravity.CENTER);
-        button.setPadding(space, space / 2, space, space / 2); button.setBackgroundResource(R.drawable.natje_focus);
+        button.setPadding(space, space / 2, space, space / 2); button.setBackgroundResource(R.drawable.natje_chip_focus);
         button.setOnClickListener(v -> click.run());
         button.setOnKeyListener((v, code, event) -> {
             if (code == KeyEvent.KEYCODE_DPAD_DOWN && event.getAction() == KeyEvent.ACTION_DOWN) { down.run(); return true; }
