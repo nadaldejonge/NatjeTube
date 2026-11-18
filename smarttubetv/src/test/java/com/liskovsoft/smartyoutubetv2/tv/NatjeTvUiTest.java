@@ -176,9 +176,17 @@ public class NatjeTvUiTest {
         assertTrue(headers.getVerticalGridView().hasFocus());
         assertEquals(0, headers.getVerticalGridView().getSelectedPosition());
         night.requestFocus();
+        night.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
+        assertTrue(settings.hasFocus());
+        settings.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP));
+        assertTrue(night.hasFocus());
         night.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP));
         assertTrue(headers.getVerticalGridView().hasFocus());
         assertEquals(3, headers.getVerticalGridView().getSelectedPosition());
+        screen.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
+        screen.layout(0, 0, width, height);
+        assertEquals("Selecting Explore must not scroll Home out of the compact menu", 0, headers.getVerticalGridView().getChildAt(0).getTop());
+        assertEquals(4, headers.getVerticalGridView().getChildCount());
         assertFalse(NatjeNightModeManager.instance(controller.get()).isActive());
         night.performClick(); assertTrue(NatjeNightModeManager.instance(controller.get()).isActive());
         controller.pause().stop().destroy();

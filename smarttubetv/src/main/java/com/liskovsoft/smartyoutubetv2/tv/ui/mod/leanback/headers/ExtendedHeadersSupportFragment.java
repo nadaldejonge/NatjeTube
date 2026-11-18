@@ -64,6 +64,8 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
             if (code == KeyEvent.KEYCODE_DPAD_RIGHT) return focusContent();
             if (v == search && code == KeyEvent.KEYCODE_DPAD_DOWN) return focusHeader(0);
             if (v == search && code == KeyEvent.KEYCODE_DPAD_UP) return true;
+            if (v == night && code == KeyEvent.KEYCODE_DPAD_DOWN) return settings.requestFocus();
+            if (v == settings && code == KeyEvent.KEYCODE_DPAD_UP) return night.requestFocus();
             if (v == night && code == KeyEvent.KEYCODE_DPAD_UP) return focusHeader(getAdapter().size() - 1);
             if (v == night && KeyHelpers.isMenuKey(code)) { NatjeNightModeSettingsPresenter.show(requireContext()); return true; }
             if (v == settings && code == KeyEvent.KEYCODE_DPAD_DOWN) return true;
@@ -89,7 +91,9 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
             androidx.leanback.widget.VerticalGridView grid = getVerticalGridView();
             grid.setPadding(0, 0, 0, 0); grid.setVerticalSpacing(0);
             grid.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-            grid.setWindowAlignment(androidx.leanback.widget.BaseGridView.WINDOW_ALIGN_LOW_EDGE);
+            grid.setWindowAlignment(androidx.leanback.widget.BaseGridView.WINDOW_ALIGN_BOTH_EDGE);
+            grid.setWindowAlignmentPreferKeyLineOverLowEdge(false);
+            grid.setWindowAlignmentPreferKeyLineOverHighEdge(false);
             grid.setWindowAlignmentOffset(0); grid.setWindowAlignmentOffsetPercent(0);
             grid.setItemAlignmentOffset(0); grid.setItemAlignmentOffsetPercent(0);
             night.setNextFocusUpId(grid.getId()); search.setNextFocusDownId(grid.getId());
@@ -99,7 +103,7 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
     @Override public void setAlignment(int ignoredTitleOffset) {
         super.setAlignment(0);
         if (getVerticalGridView() != null)
-            getVerticalGridView().setWindowAlignment(androidx.leanback.widget.BaseGridView.WINDOW_ALIGN_LOW_EDGE);
+            getVerticalGridView().setWindowAlignment(androidx.leanback.widget.BaseGridView.WINDOW_ALIGN_BOTH_EDGE);
     }
     @Override public void onResume() { super.onResume(); NatjeNightModeManager.instance(requireContext()).addListener(this); }
     @Override public void onPause() { NatjeNightModeManager.instance(requireContext()).removeListener(this); super.onPause(); }
