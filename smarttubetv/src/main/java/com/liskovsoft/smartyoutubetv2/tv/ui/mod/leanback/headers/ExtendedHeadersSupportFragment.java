@@ -95,6 +95,12 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
             night.setNextFocusUpId(grid.getId()); search.setNextFocusDownId(grid.getId());
         }
     }
+    // Browse reapplies the old title baseline during onStart; this column owns its alignment.
+    @Override public void setAlignment(int ignoredTitleOffset) {
+        super.setAlignment(0);
+        if (getVerticalGridView() != null)
+            getVerticalGridView().setWindowAlignment(androidx.leanback.widget.BaseGridView.WINDOW_ALIGN_LOW_EDGE);
+    }
     @Override public void onResume() { super.onResume(); NatjeNightModeManager.instance(requireContext()).addListener(this); }
     @Override public void onPause() { NatjeNightModeManager.instance(requireContext()).removeListener(this); super.onPause(); }
     @Override public void onNightModeChanged() {
@@ -116,6 +122,7 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
     private OnHeaderLongPressedListener mOnHeaderLongPressedListener;
 
     public ExtendedHeadersSupportFragment() {
+        androidx.leanback.widget.FocusHighlightHelper.setupHeaderItemFocusHighlight(getBridgeAdapter(), false);
         Helpers.setField(this, "mAdapterListener", mCustomAdapterListener);
     }
 
@@ -131,6 +138,9 @@ public class ExtendedHeadersSupportFragment extends HeadersSupportFragment imple
                     OnLayoutChangeListener layoutChangeListener = (OnLayoutChangeListener) Helpers.getField(ExtendedHeadersSupportFragment.this, "sLayoutChangeListener");
 
                     View headerView = viewHolder.getViewHolder().view;
+                    int rowWidth = getResources().getDimensionPixelSize(R.dimen.lb_browse_headers_width)
+                            - 2 * getResources().getDimensionPixelSize(R.dimen.natje_space);
+                    headerView.getLayoutParams().width = rowWidth;
                     headerView.setOnClickListener(v -> {
                         OnHeaderClickedListener onHeaderClickedListener =
                                 (OnHeaderClickedListener) Helpers.getField(ExtendedHeadersSupportFragment.this, "mOnHeaderClickedListener");

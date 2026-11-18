@@ -143,6 +143,8 @@ public class NatjeTvUiTest {
         for (int i = 0; i < 4; i++) rows.add(new PageRow(new HeaderItem(i, "Channel " + i)));
         headers.setAdapter(rows);
         controller.get().getSupportFragmentManager().beginTransaction().add(R.id.browse_headers_dock, headers).commitNow();
+        headers.setAlignment(260); // Parent Browse.onStart used to shift/cl ip the rows below Search.
+        assertEquals(0, headers.getVerticalGridView().getWindowAlignmentOffset());
         LinearLayout root = (LinearLayout) headers.requireView();
         View screen = controller.get().findViewById(R.id.browse_dummy);
         screen.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
@@ -156,6 +158,11 @@ public class NatjeTvUiTest {
         assertTrue(search.isFocusable()); assertTrue(night.isFocusable()); assertTrue(settings.isFocusable());
         assertSame(root, night.getParent()); assertSame(root, settings.getParent());
         assertTrue(settings.getBottom() <= height); assertTrue(night.getTop() > search.getBottom());
+        assertEquals(4, headers.getVerticalGridView().getChildCount());
+        View firstHeader = headers.getVerticalGridView().getChildAt(0);
+        assertEquals(0, firstHeader.getTop());
+        assertEquals(night.getWidth(), firstHeader.getWidth());
+        assertEquals(night.getHeight(), firstHeader.getHeight());
         assertEquals(night.getBottom(), settings.getTop());
         assertEquals(root.getChildAt(1).getBottom(), night.getTop());
         for (View action : new View[]{search, night, settings}) {
