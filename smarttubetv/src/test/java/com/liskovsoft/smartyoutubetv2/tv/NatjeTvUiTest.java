@@ -139,11 +139,12 @@ public class NatjeTvUiTest {
         controller.get().setTheme(R.style.App_Theme_DarkGrey_Browse); controller.setup();
         controller.get().setContentView(R.layout.lb_browse_fragment);
         ExtendedHeadersSupportFragment headers = new ExtendedHeadersSupportFragment();
+        headers.setPresenterSelector(new androidx.leanback.widget.SinglePresenterSelector(new IconHeaderItemPresenter(R.drawable.icon_home, null)));
         ArrayObjectAdapter rows = new ArrayObjectAdapter(new IconHeaderItemPresenter(R.drawable.icon_home, null));
         for (int i = 0; i < 4; i++) rows.add(new PageRow(new HeaderItem(i, "Channel " + i)));
         headers.setAdapter(rows);
         controller.get().getSupportFragmentManager().beginTransaction().add(R.id.browse_headers_dock, headers).commitNow();
-        headers.setAlignment(260); // Parent Browse.onStart used to shift/cl ip the rows below Search.
+        headers.setAlignment(260); // Parent Browse.onStart used to shift/clip the rows below Search.
         assertEquals(0, headers.getVerticalGridView().getWindowAlignmentOffset());
         LinearLayout root = (LinearLayout) headers.requireView();
         View screen = controller.get().findViewById(R.id.browse_dummy);
